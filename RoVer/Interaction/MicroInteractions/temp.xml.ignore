@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nta>
+	<name>temp</name>
+	<description>none</description>
+	<globals>
+	</globals>
+	<module>
+		<name>temp</name>
+		<agent>all</agent>
+		<locals>
+		</locals>
+	</module>
+</nta>

@@ -1,0 +1,282 @@
+<nta>
+  <name>Answer</name>
+  <description>The robot listens for and answers questions it can recognize.</description>
+  <globals>
+    <var name="asked" type="bool" init="false"></var>
+    <var name="startedAsking" type="bool" init="false"></var>
+    <var name="understood" type="bool" init="true"></var>
+    <var name="ended" type="bool" init="false"></var>
+    <var name="doneAsk" type="handshake"></var>
+    <var name="doneSpeak" type="handshake"></var>
+    <var name="ask" type="handshake"></var>
+    <var name="answer" type="handshake"></var>
+    <var name="giveup" type="handshake"></var>
+    <var name="speak" type="handshake"></var>
+    <var name="Introduction" type="bool" init="false" parameter="true"  required="true" description="Robot begins microinteraction by saying &quot;I can answer your question.&quot;"></var>
+    <var name="ready_for_question" type="bool" init="false"></var>
+  </globals>
+  <module>
+    <name>Robot</name>
+    <agent>robot</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Start</name>
+      <type>START</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="5" x="300" y="300">
+      <name x="300" y="300">Started</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Answering</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_COGNITIVE</gaze>
+      <gesture>GESTURE_BEAT</gesture>
+    </state>
+    <state id="2" x="300" y="300">
+      <name x="300" y="300">AskForRepeat</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_INTIMACY</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="6" x="300" y="300">
+      <name x="300" y="300">GiveUp</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_INTIMACY</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="3" x="300" y="300">
+      <name x="300" y="300">End</name>
+      <type>END</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="4" x="300" y="300">
+      <name x="300" y="300">StateIntent</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_INTIMACY</gaze>
+      <gesture>GESTURE_BEAT</gesture>
+    </state>
+    <init ref="0"></init>
+    <transition>
+      <source ref="5"/>
+      <target ref="1"/>
+      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <guard var="asked" rel="=" val="true" x="300" y="300"></guard>
+      <guard var="understood" rel="=" val="true" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="0"/>
+      <target ref="4"/>
+      <guard var="Introduction" rel="=" val="true" x="300" y="300"></guard>
+      <sync kind="sync" var="speak" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="4"/>
+      <target ref="5"/>
+      <update var="ready_for_question" val="true" x="300" y="300"></update>
+      <sync kind="sync" var="doneSpeak" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="0"/>
+      <target ref="5"/>
+      <guard var="Introduction" rel="=" val="false" x="300" y="300"></guard>
+      <update var="ready_for_question" val="true" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="5"/>
+      <target ref="2"/>
+      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <guard var="asked" rel="=" val="true" x="300" y="300"></guard>
+      <guard var="understood" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="5"/>
+      <target ref="2"/>
+      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <guard var="asked" rel="=" val="true" x="300" y="300"></guard>
+      <guard var="understood" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="5"/>
+      <target ref="6"/>
+      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <guard var="asked" rel="=" val="true" x="300" y="300"></guard>
+      <guard var="understood" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="6"/>
+      <target ref="3"/>
+      <sync kind="sync" var="giveup" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="5"/>
+      <target ref="3"/>
+      <update var="ended" val="true" x="300" y="300"></update>
+      <guard var="asked" rel="=" val="false" x="300" y="300"></guard>
+      <guard var="startedAsking" rel="=" val="false" x="300" y="300"></guard>
+      <guard var="understood" rel="=" val="true" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="5"/>
+      <sync kind="sync" var="doneSpeak" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="3"/>
+      <sync kind="sync" var="doneSpeak" x="300" y="300"></sync>
+      <update var="ended" val="true" x="300" y="300"></update>
+    </transition>
+  </module>
+  <module>
+    <name>Human</name>
+    <agent>human</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Present</name>
+      <type>READY</type>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Asking</name>
+      <type>BUSY</type>
+    </state>
+    <state id="2" x="300" y="300">
+      <name x="300" y="300">Ignored</name>
+      <type>IGNORE</type>
+    </state>
+    <state id="3" x="300" y="300">
+      <name x="300" y="300">Busy</name>
+      <type>BUSY</type>
+    </state>
+    <init ref="0"></init>
+    <init ref="2"></init>
+    <init ref="3"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="0"/>
+      <sync kind="sync" var="doneSpeak" x="300" y="300"></sync>
+      <update var="startedAsking" val="false" x="300" y="300"></update>
+      <update var="asked" val="false" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="2"/>
+      <sync kind="sync" var="doneSpeak" x="300" y="300"></sync>
+      <update var="startedAsking" val="false" x="300" y="300"></update>
+      <update var="asked" val="false" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="3"/>
+      <target ref="3"/>
+      <sync kind="sync" var="doneSpeak" x="300" y="300"></sync>
+      <update var="startedAsking" val="false" x="300" y="300"></update>
+      <update var="asked" val="false" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="1"/>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+      <sync kind="sync" var="ask" x="300" y="300"></sync>
+      <update var="startedAsking" val="true" x="300" y="300"></update>
+      <guard var="asked" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="3"/>
+      <target ref="1"/>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+      <sync kind="sync" var="ask" x="300" y="300"></sync>
+      <update var="startedAsking" val="true" x="300" y="300"></update>
+      <guard var="asked" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <sync kind="sync" var="ask" x="300" y="300"></sync>
+      <update var="startedAsking" val="true" x="300" y="300"></update>
+      <guard var="asked" rel="=" val="false" x="300" y="300"></guard>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="doneAsk" x="300" y="300"></sync>
+      <update var="understood" val="true" x="300" y="300"></update>
+      <update var="asked" val="true" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="doneAsk" x="300" y="300"></sync>
+      <update var="asked" val="true" x="300" y="300"></update>
+      <update var="understood" val="false" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="0"/>
+      <target ref="2"/>
+      <sync kind="sync" var="giveup" x="300" y="300"></sync>
+    </transition>
+  </module>
+  <module>
+    <name>R_Speech</name>
+    <agent>robot</agent>
+    <locals>
+    </locals>
+    <state id="7" x="650" y="300">
+      <name x="15" y="-26">Speaking</name>
+      <type>SPEAKING</type>
+    </state>
+    <state id="8" x="500" y="300">
+      <name x="-222" y="-26">Silent</name>
+      <type>SILENT</type>
+    </state>
+    <init ref="8"></init>
+    <transition>
+      <source ref="8"/>
+      <target ref="7"/>
+      <sync kind="sync" var="speak" x="-119" y="-76"></sync>
+      <nail x="575" y="200"/>
+    </transition>
+    <transition>
+      <source ref="7"/>
+      <target ref="8"/>
+      <sync kind="sync" var="doneSpeak" x="-136" y="85"></sync>
+      <nail x="575" y="400"/>
+    </transition>
+    <transition>
+      <source ref="7"/>
+      <target ref="8"/>
+      <sync kind="sync" var="giveup" x="-136" y="85"></sync>
+      <nail x="575" y="400"/>
+    </transition>
+  </module>
+  <module>
+    <name>H_Speech</name>
+    <agent>human</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">H_Speaking</name>
+      <type>SPEAKING</type>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">H_Silent</name>
+      <type>SILENT</type>
+    </state>
+    <init ref="1"></init>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <guard var="ready_for_question" rel="=" val="true" x="300" y="300"></guard>
+      <sync kind="sync" var="ask" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <sync kind="sync" var="doneAsk" x="300" y="300"></sync>
+    </transition>
+  </module>
+</nta>

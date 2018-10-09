@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="PrismGUI">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/PrismGUI.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nta>
+	<!-- Task Properties -->
+	<property>
+		<ID>0</ID>
+		<content>P>=1 [ Greeter | Wait ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<description>An instruction must occur.</description>
+	</property>
+	<property>
+		<ID>0</ID>
+		<content>P>=1 [ Greeter | Wait ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<description>Once an instruction occurs, then a handoff must occur at some point in the future.</description>
+	</property>
+	<property>
+		<ID>0</ID>
+		<content>P>=1 [ Greeter | Wait ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<description>A handoff should not occur before the first instance of an instruction.</description>
+	</property>
+	<property>
+		<ID>0</ID>
+		<content>P>=1 [ Greeter | Wait ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<description>A successful handoff will occur.</description>
+	</property>
+	<property>
+		<ID>0</ID>
+		<content>P>=1 [ Greeter | Wait ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<description>No more than one successful handoff will occur.</description>
+	</property>
+
+	<!-- Greeting Properties -->
+	<property>
+		<ID>0</ID>
+		<content>P>=1 [ Greeter | Wait ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<description>The interaction must start with a greeting or a wait.</description>
+	</property>
+	<property>
+		<ID>0</ID>
+		<content>P>=1 [ Greeter | Wait ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<description>All greetings should occur before the first issuing of the instruction.</description>
+	</property>
+
+	<!-- Greeter noninterruptability Properties -->
+	<property>
+		<ID>0</ID>
+		<content>P>=1 [ Greeter | Wait ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<description>The robot must handle the case where it greets the human and is ignored.</description>
+	</property>
+	<property>
+		<ID>0</ID>
+		<content>P>=1 [ Greeter | Wait ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<description>Human must be ready to proceed before undergoing the instruction. </description>
+	</property>
+	<property>
+		<ID>0</ID>
+		<content>P>=1 [ Greeter | Wait ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<description>If greeted human and ignored, it is never the case that robot speech occurs twice in a row until the instruction occurs.</description>
+	</property>
+
+	<!-- Farewell properties -->
+	<property>
+		<ID>1</ID>
+		<content>P>=1 [ G ("deadlock" &lt;=&gt; (Farewell &amp; outer)) ];</content>
+		<ties>interaction</ties>
+		<bugtrackID>farewell</bugtrackID>
+		<initVal>true</initVal>
+		<description>The interaction must end with a farewell.</description>
+	</property>
+	<property>
+		<ID>2</ID>
+		<content>filter(print, Pmax=? [X (Greeter &amp; inner)], Greeter);</content>
+		<ties>group</ties>
+		<bugtrackID>doublegreet</bugtrackID>
+		<initVal>true</initVal>
+		<description>robot should not issue multiple greetings in a row.</description>
+	</property>
+	<property>
+		<ID>3</ID>
+		<content>filter(print, Pmax=? [ (("deadlock" | !(X Remark)) | ((X X "deadlock") | !(X X X Wait))) &amp; ("deadlock" | !(X (Wait &amp; Remark))) ], Instruction &amp; busy);</content>
+		<ties>group</ties>
+		<bugtrackID>instBusy</bugtrackID>
+		<initVal>true</initVal>
+		<description>the robot does not handle the human hesitating with the task.</description>
+		<fix id="2">
+			<description>Provide a helpful remark and then wait for human's input.</description>
+		</fix>
+	</property>
+	<property>
+		<ID>4</ID>
+		<content>filter(print, Pmax=? [ (("deadlock" | !(X Answer)) &amp; ("deadlock" | !(X Remark) | (X X "deadlock") | !(X X X Answer))) ], Instruction &amp; ignore);</content>
+		<ties>group</ties>
+		<bugtrackID>instSuspended</bugtrackID>
+		<initVal>true</initVal>
+		<description>the robot does not handle the human wanting to ask a question.</description>
+		<fix id="3">
+			<description>Allow human to ask a question.</description>
+		</fix>
+	</property>
+</nta>

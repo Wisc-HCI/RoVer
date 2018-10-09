@@ -1,0 +1,183 @@
+<nta>
+  <name>Remark</name>
+  <description>The robot says something to the human.</description>
+  <globals>
+    <var name="speak" type="handshake"></var>
+    <var name="stopSpeaking" type="handshake"></var>
+    <var name="hspeak" type="handshake"></var>
+    <var name="hstopSpeaking" type="handshake"></var>
+    <var name="hlock" type="bool" init="false"></var>
+    <var name="doneSpeaking" type="bool" init="false"></var>
+    <var name="ended" type="bool" init="false"></var>
+    <var name="content" type="str" init="" parameter="true" required="true" prismIgnore="true" description="Content of the robot's speech."></var>
+    <var name="use_gesture" type="bool" init="true" parameter="true"  required="true" description="Whether or not the robot will use beat gestures."></var>
+    <var name="Allow_human_to_respond" type="bool" init="false" parameter="true"  required="true" description="Whether the robot gives the human any time to respond after the robot's remark."></var>
+  </globals>
+  <module>
+    <name>Robot</name>
+    <agent>robot</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Start</name>
+      <type>START</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Commenting</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_INTIMACY</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="2" x="300" y="300">
+      <name x="300" y="300">End</name>
+      <type>END</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="3" x="300" y="300">
+      <name x="300" y="300">Waiting</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <init ref="0"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <sync kind="sync" var="speak" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="2"/>
+      <guard var="Allow_human_to_respond" rel="=" val="false" x="300" y="300"></guard>
+      <sync kind="sync" var="stopSpeaking" x="300" y="300"></sync>
+      <update var="doneSpeaking" val="true" x="300" y="300"></update>
+      <guard var="hlock" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="3"/>
+      <guard var="Allow_human_to_respond" rel="=" val="true" x="300" y="300"></guard>
+      <sync kind="sync" var="stopSpeaking" x="300" y="300"></sync>
+      <update var="doneSpeaking" val="true" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="3"/>
+      <target ref="2"/>
+      <update var="ended" val="true" x="300" y="300"></update>
+      <guard var="hlock" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+  </module>
+  <module>
+    <name>Human</name>
+    <agent>human</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Present</name>
+      <type>READY</type>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Busy</name>
+      <type>BUSY</type>
+    </state>
+    <state id="2" x="300" y="300">
+      <name x="300" y="300">Ignored</name>
+      <type>IGNORE</type>
+    </state>
+    <state id="3" x="300" y="300">
+      <name x="300" y="300">Responded</name>
+      <type>READY</type>
+    </state>
+    <state id="4" x="300" y="300">
+      <name x="300" y="300">Responding</name>
+      <type>READY</type>
+    </state>
+    <init ref="0"></init>
+    <init ref="1"></init>
+    <init ref="2"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="4"/>
+      <guard var="Allow_human_to_respond" rel="=" val="true" x="300" y="300"></guard>
+      <sync kind="sync" var="hspeak" x="300" y="300"></sync>
+      <guard var="doneSpeaking" rel="=" val="true" x="300" y="300"></guard>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+      <update var="hlock" val="true" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="4"/>
+      <guard var="Allow_human_to_respond" rel="=" val="true" x="300" y="300"></guard>
+      <sync kind="sync" var="hspeak" x="300" y="300"></sync>
+      <guard var="doneSpeaking" rel="=" val="true" x="300" y="300"></guard>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+      <update var="hlock" val="true" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="4"/>
+      <guard var="Allow_human_to_respond" rel="=" val="true" x="300" y="300"></guard>
+      <sync kind="sync" var="hspeak" x="300" y="300"></sync>
+      <guard var="doneSpeaking" rel="=" val="true" x="300" y="300"></guard>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+      <update var="hlock" val="true" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="4"/>
+      <target ref="3"/>
+      <sync kind="sync" var="hstopSpeaking" x="300" y="300"></sync>
+      <update var="hlock" val="false" x="300" y="300"></update>
+    </transition>
+  </module>
+  <module>
+    <name>H_Speech</name>
+    <agent>human</agent>
+    <locals>
+    </locals>
+    <state id="1" x="650" y="300">
+      <name x="15" y="-26">Speaking</name>
+      <type>SPEAKING</type>
+    </state>
+    <state id="0" x="500" y="300">
+      <name x="-222" y="-26">Silent</name>
+      <type>SILENT</type>
+    </state>
+    <init ref="0"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <sync kind="sync" var="hspeak" x="-119" y="-76"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="hstopSpeaking" x="-136" y="85"></sync>
+    </transition>
+  </module>
+  <module>
+    <name>R_Speech</name>
+    <agent>robot</agent>
+    <locals>
+    </locals>
+    <state id="1" x="650" y="300">
+      <name x="15" y="-26">Speaking</name>
+      <type>SPEAKING</type>
+    </state>
+    <state id="0" x="500" y="300">
+      <name x="-222" y="-26">Silent</name>
+      <type>SILENT</type>
+    </state>
+    <init ref="0"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <sync kind="sync" var="speak" x="-119" y="-76"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="stopSpeaking" x="-136" y="85"></sync>
+    </transition>
+  </module>
+</nta>

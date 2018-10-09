@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="320.0" prefWidth="407.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="320.0" prefWidth="407.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="132.0" prefWidth="407.0" style="-fx-background-color: white;">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="82.0" prefWidth="347.0" spacing="50.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21dcff" height="55.0" stroke="BLACK" strokeType="INSIDE" width="55.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff2121" height="55.0" stroke="BLACK" strokeType="INSIDE" width="55.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="82.0" prefWidth="347.0" spacing="50.0">
+                     <children>
+                        <CheckBox fx:id="noBreakdown" mnemonicParsing="false" text="Success" />
+                        <CheckBox fx:id="breakdown" mnemonicParsing="false" text="Breakdown" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" top="15.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="134.0" prefWidth="407.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="82.0" prefWidth="347.0" spacing="50.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#59ff1f" height="55.0" stroke="BLACK" strokeType="INSIDE" width="55.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fff01f" height="55.0" stroke="BLACK" strokeType="INSIDE" width="55.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff451f" height="55.0" stroke="BLACK" strokeType="INSIDE" width="55.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="82.0" prefWidth="347.0" spacing="50.0">
+                     <children>
+                        <CheckBox fx:id="ready" mnemonicParsing="false" text="Ready" />
+                        <CheckBox fx:id="busy" mnemonicParsing="false" text="Busy" />
+                        <CheckBox fx:id="ignore" mnemonicParsing="false" text="Ignore" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" top="15.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="51.0" prefWidth="407.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="82.0" prefWidth="347.0" spacing="50.0">
+                     <children>
+                        <CheckBox fx:id="else" mnemonicParsing="false" text="Else" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="51.0" prefWidth="407.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="82.0" prefWidth="347.0" spacing="50.0">
+                     <children>
+                        <Button fx:id="okay" mnemonicParsing="false" text="Okay" />
+                        <Button fx:id="cancel" mnemonicParsing="false" text="Cancel" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

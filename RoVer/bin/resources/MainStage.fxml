@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+   <top>
+      <VBox prefHeight="85.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar prefHeight="45.0" prefWidth="600.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newProject" text="New Project">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Open">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Save">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Save As">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#importMicrointeraction" text="Import Microinteraction" />
+                        <MenuItem mnemonicParsing="false" onAction="#exportMicrointeraction" text="Export Microinteraction" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Exit">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem fx:id="undoButtonM" disable="true" mnemonicParsing="false" onAction="#undoButton" text="Undo">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="redoButtonM" disable="true" mnemonicParsing="false" onAction="#redoButton" text="Redo">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Cut">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Copy">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Paste">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Delete">
+                        <accelerator>
+                              <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="Model">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#checkReachability" text="Check Reachability" />
+                        <MenuItem mnemonicParsing="false" onAction="#checkSequential" text="Check Sequential" />
+                        <MenuItem mnemonicParsing="false" onAction="#checkConcurrent" text="Check Concurrent" />
+                    </items>
+                  </Menu>
+                <Menu mnemonicParsing="false" text="View">
+                  <items>
+                    <MenuItem fx:id="toggleGrid" mnemonicParsing="false" onAction="#toggleGrid" text="Hide Grid" />
+                        <MenuItem fx:id="resizeConsole" mnemonicParsing="false" onAction="#resizeConsoleButton" text="Hide Console" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="Tools">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Under Dev" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Options">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Under Dev" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="User Guide" />
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+            <ToolBar prefHeight="229.0" prefWidth="600.0">
+              <items>
+                  <Separator orientation="VERTICAL" prefHeight="30.0" />
+                  <Button fx:id="undoButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#undoButton">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" smooth="false">
+                           <image>
+                              <Image url="@../../Icons/undo.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Undo" />
+                     </tooltip>
+                  </Button>
+                <Button fx:id="redoButton" disable="true" mnemonicParsing="false" onAction="#redoButton">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/redo.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Redo" />
+                     </tooltip>
+                  </Button>
+                  <Separator orientation="VERTICAL" prefHeight="30.0" />
+                  <Button fx:id="selectButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectButton">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/selection.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <effect>
+                        <Blend />
+                     </effect>
+                     <tooltip>
+                        <Tooltip text="Select Tool" />
+                     </tooltip>
+                     </Button>
+                  <Button fx:id="addState" mnemonicParsing="false" onAction="#addStateButton">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/addState.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Add State" />
+                     </tooltip></Button>
+                  <Button fx:id="addBranch" mnemonicParsing="false" onAction="#addBranchButton">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/branchPoint.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Add Branch Point" />
+                     </tooltip></Button>
+                  <Button fx:id="addTransition" mnemonicParsing="false" onAction="#addTransitionButton">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/addTransition.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Add Transition" />
+                     </tooltip></Button>
+                  <Button fx:id="addNail" mnemonicParsing="false" onAction="#addNailButton">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/nail.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Add Nail" />
+                     </tooltip></Button>
+              </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <SplitPane fx:id="mainPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="214.0" prefWidth="598.0">
+               <children>
+                  <SplitPane dividerPositions="0.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane maxWidth="350.0" minHeight="0.0" minWidth="0.0">
+                           <children>
+                              <TabPane fx:id="paramtp" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                  <Tab text="Parameterization">
+                                    <content>
+                                      <AnchorPane fx:id="parameterizer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" />
+                                    </content>
+                                  </Tab>
+                                  <Tab text="Filesystem">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0">
+                                             <children>
+                                                <TreeView fx:id="projectExplorer" prefHeight="275.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </Tab>
+                                </tabs>
+                              </TabPane>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" style="-fx-background-color: white;">
+                           <children>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ScrollPane fx:id="interactionScrollPane" HBox.hgrow="ALWAYS">
+                                       <content>
+                                          <AnchorPane fx:id="editorPaneAnchor" prefHeight="600.0" prefWidth="1400.0" />
+                                       </content>
+                                    </ScrollPane>
+                                    <Separator orientation="VERTICAL" prefHeight="200.0" style="-fx-border-width: 5 0 0 0;" />
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="70.0" minWidth="-Infinity" prefHeight="147.0" prefWidth="55.0" spacing="5.0">
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="20.0" maxWidth="20.0" mnemonicParsing="false" onAction="#resizeConsoleButton" prefHeight="20.0" prefWidth="20.0">
+                                             <graphic>
+                                                <ImageView fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../Icons/resizeConsole.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                             <tooltip>
+                                                <Tooltip text="Resize Console" />
+                                             </tooltip>
+                                          </Button>
+                                          <Separator prefWidth="200.0" />
+                                          <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="10.0" layoutY="65.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
+                                             <graphic>
+                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../Icons/simulator.png" />
+                                                   </image></ImageView>
+                                             </graphic>
+                                             <tooltip>
+                                                <Tooltip text="Simulator" />
+                                             </tooltip>
+                                          </Button>
+                                          <Separator prefWidth="200.0" />
+                                          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="47.0" mnemonicParsing="false" onAction="#switchEditor" prefHeight="25.0" prefWidth="25.0">
+                                             <graphic>
+                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../Icons/switchEditor.png" />
+                                                   </image></ImageView>
+                                             </graphic>
+                                             <tooltip>
+                                                <Tooltip text="Switch Editor" />
+                                             </tooltip>
+                                          </Button>
+                                       </children>
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+            <TabPane fx:id="leftPane" />
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>

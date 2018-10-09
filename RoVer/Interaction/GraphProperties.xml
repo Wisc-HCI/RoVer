@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nta>
+<!--
+Task: 
+- The robot must wait on-loop for the human to approach it before starting the interaction.    (I predict no loop)
+- The robot must greet each human that approaches it.
+- The robot must answer questions for as long as the human continues to ask them.     (I predict branching and sequential errors)
+- The robot must say goodbye to the human after all of the human's questions have been answered. (I predict premature goodbyes)
+- (HIDDEN?) the robot must say goodbye before ending the interaction, in general
+- The interaction must continuously run.
+
+Social
+- The interaction must start with a wait.
+- turn-taking through the entire interaction - 
+	- if we have a microinteraction that ~only~ involves human speech, then the next microinteraction should not involve human speech first
+	- if we have a microinteraction that does ~not~ involve any robot speech, then the next microinteraction should involve robot speech first
+- noninterruptability before interacting
+
+
+microinteraction modifications:
+- finish answer
+- greeting, if ready then assume will still be ready in output
+	- greeting should be "hello, how are you doing today?"
+
+- greeting, turn on/off human response
+- remark, add human response element
+-->
+	<!--noninterruptability-->
+	<property>
+		<ID>0</ID>
+		<class>Waiting Flubs</class>
+		<logic>LTL</logic>
+		<!--<content>filter(print, Pmax=? [!(("Greeter" | "Wait") U "ready_overall")], "Greeter"&amp;end&amp;"ignore");</content>-->
+		<!--<content>filter(print, Pmax=? [!((  "speaks" => ((X X X !"speaks") | (X X X "ready_overall"))   ) U "ready_overall")], "Greeter"&amp;end&amp;"ignore");</content>-->
+		<content>P>=1 [((  "speaks" => ((X X X !"speaks") | (X X X "ready_overall"))   ) U "ready_overall")];</content>
+		<ties>init</ties>
+		<bugtrackID>noninterruptability</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>1-3.png</icon>
+		<description>The robot should wait for the human to acknowledge the robot before beginning the interaction. The robot may do other things while it is waiting, as long as it speaks only infrequently.</description>
+	</property>
+	<property>
+		<ID>1</ID>
+		<class>Greeting Flubs</class>
+		<logic>LTL</logic>
+		<content>P>=1 [F "Greeter"&amp;(!start)];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>1-6.png</icon>
+		<description>The robot should issue a greeting at some point.</description>
+	</property>
+	<property>
+		<ID>7</ID>
+		<class>Greeting Flubs</class>
+		<logic>LTL</logic>
+		<content>P>=1 [G !("Greeter"&amp;start&amp;"ignore_overall")];</content>
+		<ties>interaction</ties>
+		<bugtrackID>dont_greet</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>1-2.png</icon>
+		<description>The robot should not greet humans that haven't approached it.</description>
+	</property>
+	<property>
+		<ID>12</ID>
+		<class>Greeting Flubs</class>
+		<logic>LTL</logic>
+		<content>filter(print, Pmax=? [F "Greeter"&amp;(!start)&amp;(!end)], "Greeter"&amp;end);</content>
+		<ties>group</ties>
+		<bugtrackID>greet_twice</bugtrackID>
+		<initVal>true</initVal>
+		<context label="The robot should never greet a human twice. After">true</context>
+		<icon>1-5.png</icon>
+		<description>it is possible that this occurs.</description>
+	</property>
+
+	<!--Task properties-->
+	<property>
+		<ID>2</ID>
+		<class>Answer Flubs</class>
+		<logic>LTL</logic>
+		<content>filter(print, Pmin=? [!(F "Answer"&amp;(!start)&amp;(!end))], "Answer"&amp;end&amp;"ready_overall");</content>
+		<!--<content>Pmin=? [(G F "Answer"&amp;end&amp;"ready_overall"&amp;(!"deadlock"))];</content>-->
+		<ties>group</ties>
+		<bugtrackID>infinite_answers</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>7-1.png</icon>
+		<description>After successfully answering a question, the human SHOULD BE ABLE TO ask infinitely more questions if they want.</description>
+	</property>
+	<property>
+		<ID>11</ID>
+		<class>Answer Flubs</class>
+		<logic>LTL</logic>
+		<!--<content>filter(print, Pmin=? [ !( (!"deadlock") => ( F (G !("Answer"&amp;end&amp;"ready_overall"))))], "Answer"&amp;end&amp;"ready_overall");</content>-->
+		<content>filter(print, Pmin=? [ !( !( F "Answer"&amp;(!start)&amp;(!end)))], "Answer"&amp;end&amp;"ready_overall");</content>
+		<!--<content>filter(print, Pmin=? [ !(F (G !("Answer"&amp;start)))], "Answer"&amp;end&amp;"ready_overall");</content>-->
+		<!--<content>E [ (F "Answer"&amp;end&amp;"ready_overall") => !(G F "Answer"&amp;(!"deadlock"))];</content>-->
+		<ties>group</ties>
+		<bugtrackID>exit_answering</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>7-7.png</icon>
+		<description>After successfully answering a question, the human DOES NOT NEED TO ask more questions.</description>
+	</property>
+	<property>
+		<ID>4</ID>
+		<class>Answer Flubs</class>
+		<logic>LTL</logic>
+		<content>filter(print, Pmax=? [(F ("Answer"&amp;(!start)&amp;(!end)))], "Answer"&amp;end&amp;("busy_overall" | "ignore_overall"));</content>
+		<ties>group</ties>
+		<bugtrackID>unsuccessful_answer</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>7-2.png</icon>
+		<description>After UNsuccessfully answering a question, the robot should not listen for any more questions from the human.</description>
+	</property>
+
+	<property>
+		<ID>3</ID>
+		<class>Answer Flubs</class>
+		<logic>LTL</logic>
+		<content>P>=1 [F "Answer"&amp;(!start)&amp;(!end)];</content>
+		<ties>interaction</ties>
+		<bugtrackID>liveness_answer</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>7-8.png</icon>
+		<description>The interaction should not end before the robot has answered any questions.</description>
+	</property>
+
+	<!-- Farewell properties -->
+	<property>
+		<ID>5</ID>
+		<class>Farewell Flubs</class>
+		<logic>LTL</logic>
+		<content>filter(print, Pmax=? [ !("Farewell")], "deadlock");</content>
+		<ties>group</ties>
+		<bugtrackID>farewell_deadlock</bugtrackID>
+		<initVal>true</initVal>
+		<context label="In">true</context>
+		<icon>4-3.png</icon>
+		<description>the interaction might end without a farewell! The interaction should end with a farewell.</description>
+	</property>
+	<property>
+		<ID>6</ID>
+		<class>Farewell Flubs</class>
+		<logic>LTL</logic>
+		<content>P>=1 [F "deadlock"];</content>
+		<ties>interaction</ties>
+		<bugtrackID>end_reachability</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>4-1.png</icon>
+		<description>The interaction should eventually end."</description>
+	</property>
+
+	<!--Turn taking-->
+	<property>
+		<ID>8</ID>
+		<class>Turn-taking Flubs</class>
+		<logic>LTL</logic>
+		<content>filter(print, Pmax=? [(!(X X X"deadlock")) &amp; (X X X "speaksFirst")], "speaks"&amp;(!"hspeaks"));</content>
+		<ties>group</ties>
+		<bugtrackID>double_robot_speech</bugtrackID>
+		<initVal>true</initVal>
+		<context label="There is a sequence of microinteractions starting from">true</context>
+		<icon>2-6.png</icon>
+		<description>in which the ROBOT speaks twice in a row.</description>
+	</property>
+	<property>
+		<ID>9</ID>
+		<class>Turn-taking Flubs</class>
+		<logic>LTL</logic>
+		<content>filter(print, Pmax=? [(!(X "deadlock")) &amp; (X ("hspeaksFirst"&amp;(hstate_overall=0)))], (hstate_overall=0)&amp;"hspeaks"&amp;end&amp;(!"speaks"));</content>
+		<ties>group</ties>
+		<bugtrackID>double_human_speech</bugtrackID>
+		<initVal>true</initVal>
+		<context label="There is a sequence of microinteractions starting from">true</context>
+		<icon>2-1.png</icon>
+		<description>in which the robot expects the HUMAN to speak twice in a row.</description>
+	</property>
+</nta>

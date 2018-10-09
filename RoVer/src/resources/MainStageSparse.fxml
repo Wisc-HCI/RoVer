@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+   <children>
+      <MenuBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#importDesign" text="Import Interaction">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#generateRandomInteraction" text="Random Interaction">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#interactionToJPG" text="Export Image">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Exit">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Feedback">
+               <items>
+                  <CheckMenuItem fx:id="feedbackSwitch" mnemonicParsing="false" onAction="#switchFeedback" text="Feedback on" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Experiment">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#startDesign" text="Start Design" />
+                  <MenuItem mnemonicParsing="false" onAction="#stopDesign" text="Stop Design" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#lock" text="Lock" />
+                  <MenuItem mnemonicParsing="false" onAction="#unlock" text="Unlock" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem mnemonicParsing="false" text="User Guide" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <ToolBar fx:id="toolbar" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+         <items>
+            <ToggleButton fx:id="selectButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectButton" prefHeight="60.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/selection.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <effect>
+                  <Blend />
+               </effect>
+               <tooltip>
+                  <Tooltip text="Select" />
+               </tooltip>
+            </ToggleButton>
+            <ToggleButton fx:id="addGroup" mnemonicParsing="false" onAction="#addGroupButton" prefHeight="60.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/addState.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Add Group" />
+               </tooltip>
+            </ToggleButton>
+            <ToggleButton fx:id="addTransition" mnemonicParsing="false" onAction="#addTransitionButton" prefHeight="60.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/addTransition.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Add Transition" />
+               </tooltip>
+            </ToggleButton>
+            <AnchorPane fx:id="bugStatPane" prefHeight="60.0" />
+         </items>
+      </ToolBar>
+      <SplitPane fx:id="mainPane" dividerPositions="0.18, 0.82" minHeight="-Infinity" prefHeight="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0">
+         <items>
+            <TabPane fx:id="leftPane" minWidth="-Infinity" prefWidth="250.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab text="Library">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                  </Tab>
+                  <Tab text="Conditions">
+                     <content>
+                        <AnchorPane fx:id="conditionalPane" prefHeight="60.0">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs></TabPane>
+            <ScrollPane fx:id="interactionScrollPane" minWidth="-Infinity" prefWidth="700.0">
+               <content>
+                  <AnchorPane fx:id="editorPaneAnchor" prefHeight="1200.0" prefWidth="1920.0" />
+               </content>
+            </ScrollPane>
+            <TabPane minWidth="-Infinity" prefWidth="250.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Documentation">
+                  <content>
+                    <AnchorPane>
+                           <children>
+                              <Accordion fx:id="paramtp" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <panes>
+                                    <TitledPane animated="false" layoutX="10.0" layoutY="10.0" text="About">
+                                       <content>
+                                          <AnchorPane fx:id="about" />
+                                       </content>
+                                    </TitledPane>
+                                  <TitledPane animated="false" text="Properties">
+                                    <content>
+                                      <AnchorPane fx:id="parameterizer" />
+                                    </content>
+                                  </TitledPane>
+                                </panes>
+                              </Accordion>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Warnings">
+                  <content>
+                    <AnchorPane>
+                           <children>
+                              <TreeView fx:id="violations" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

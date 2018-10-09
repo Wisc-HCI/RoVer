@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="pane" prefHeight="178.0" prefWidth="559.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER" layoutX="71.0" prefHeight="209.0" prefWidth="450.0" style="-fx-background-color: white;">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="276.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/info.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="groupPropTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure you want to simulate with the following problems?" wrappingWidth="361.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <ListView fx:id="iaConflictBox" prefHeight="99.0" prefWidth="329.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </ListView>
+            <HBox alignment="CENTER" prefHeight="44.0" prefWidth="351.0" spacing="50.0">
+               <children>
+                  <Button fx:id="createButton" mnemonicParsing="false" text="Yes, let me simulate!" />
+                  <Button fx:id="cancelButton" mnemonicParsing="false" text="No, not yet." />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="25.0" right="25.0" />
+         </padding>
+      </VBox>
+      <Text layoutX="25.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conflicts" wrappingWidth="61.000001057982445" />
+   </children>
+</AnchorPane>

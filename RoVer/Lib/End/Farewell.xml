@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nta>
+	<name>Farewell</name>
+	<description>The robot bids farewell to the human.</description>
+	<globals>
+		<var name="robot_goodbye" type="bool" init="false"></var>
+		<var name="human_donespeak" type="handshake"></var>
+		<var name="speak" type="handshake"></var>
+		<var name="doneSpeak" type="handshake"></var>
+		<var name="human_input" type="handshake"></var>
+		<var name="human_speak" type="handshake"></var>
+	</globals>
+	<module>
+		<name>Robot</name>
+		<agent>robot</agent>
+		<locals>
+		</locals>
+		<state id="0" x="650" y="300">
+			<name x="474" y="0">End</name>
+			<type>END</type>
+			<gaze>GAZE_AT</gaze>
+      		<gesture>GESTURE_NONE</gesture>
+		</state>
+		<state id="1" x="500" y="300">
+			<name x="279" y="0">Wait</name>
+			<type>INTERACTING</type>
+			<gaze>GAZE_AT</gaze>
+      		<gesture>GESTURE_NONE</gesture>
+		</state>
+		<state id="2" x="350" y="300">
+			<name x="83" y="0">BiddingFarewell</name>
+			<type>INTERACTING</type>
+			<gaze>GAZE_INTIMACY</gaze>
+      		<gesture>GESTURE_NONE</gesture>
+		</state>
+		<state id="3" x="200" y="300">
+			<name x="-120" y="0">Start</name>
+			<type>START</type>
+			<gaze>GAZE_AT</gaze>
+      		<gesture>GESTURE_NONE</gesture>
+		</state>
+		<init ref="3"/>
+		<transition>
+			<source ref="1"/>
+			<target ref="0"/>
+			<sync kind="sync" var="human_input" x="111" y="17"></sync>
+			<update var="robot_goodbye" val="false" x="-50" y="-51"></update>
+		</transition>
+		<transition>
+			<source ref="1"/>
+			<target ref="0"/>
+			<sync kind="sync" var="human_donespeak" x="111" y="17"></sync>
+			<update var="robot_goodbye" val="false" x="-50" y="-51"></update>
+		</transition>
+		<transition>
+			<source ref="2"/>
+			<target ref="1"/>
+			<sync kind="sync" var="doneSpeak" x="111" y="17"></sync>
+			<update var="robot_goodbye" val="true" x="-50" y="-51"></update>
+		</transition>
+		<transition>
+			<source ref="3"/>
+			<target ref="2"/>
+			<sync kind="sync" var="speak" x="-92" y="17"></sync>
+		</transition>
+	</module>
+	<module>
+		<name>Human</name>
+		<agent>human</agent>
+		<locals>
+		</locals>
+		<state id="4" x="650" y="300">
+			<name x="15" y="34">Ignored</name>
+			<type>IGNORE</type>
+		</state>
+		<state id="5" x="500" y="150">
+			<name x="15" y="-144">Acknowledged</name>
+			<type>READY</type>
+		</state>
+		<state id="6" x="350" y="300">
+			<name x="-163" y="-51">Present</name>
+			<type>READY</type>
+		</state>
+		<init ref="6"/>
+		<init ref="4"/>
+		<transition>
+			<source ref="4"/>
+			<target ref="5"/>
+			<guard var="robot_goodbye" rel="=" val="true" x="300" y="300"></guard>
+			<sync kind="sync" var="human_speak" x="-34" y="-34"></sync>
+		</transition>
+		<transition>
+			<source ref="4"/>
+			<target ref="4"/>
+			<sync kind="sync" var="human_input" x="-34" y="-34"></sync>
+		</transition>
+		<transition>
+			<source ref="6"/>
+			<target ref="4"/>
+			<sync kind="sync" var="human_input" x="-34" y="-34"></sync>
+		</transition>
+		<transition>
+			<source ref="6"/>
+			<target ref="5"/>
+			<guard var="robot_goodbye" rel="=" val="true" x="300" y="300"></guard>
+			<sync kind="sync" var="human_speak" x="-187" y="-85"></sync>
+		</transition>
+	</module>
+	<module>
+		<name>H_Speech</name>
+		<agent>human</agent>
+		<locals>
+		</locals>
+		<state id="7" x="650" y="300">
+			<name x="15" y="-26">HSpeaking</name>
+			<type>SPEAKING</type>
+		</state>
+		<state id="8" x="500" y="300">
+			<name x="-222" y="-26">HSilent</name>
+			<type>SILENT</type>
+		</state>
+		<init ref="8"></init>
+		<transition>
+			<source ref="7"/>
+			<target ref="8"/>
+			<sync kind="sync" var="human_donespeak" x="-119" y="-76"></sync>
+			<nail x="575" y="200"/>
+		</transition>
+		<transition>
+			<source ref="8"/>
+			<target ref="7"/>
+			<sync kind="sync" var="human_speak" x="-136" y="85"></sync>
+			<nail x="575" y="400"/>
+		</transition>
+	</module>
+	<module>
+		<name>R_Speech</name>
+		<agent>robot</agent>
+		<locals>
+		</locals>
+		<state id="7" x="650" y="300">
+			<name x="41" y="-51">Speaking</name>
+			<type>SPEAKING</type>
+		</state>
+		<state id="8" x="500" y="300">
+			<name x="-188" y="-51">Silent</name>
+			<type>SILENT</type>
+		</state>
+		<init ref="8"/>
+		<transition>
+			<source ref="7"/>
+			<target ref="8"/>
+			<sync kind="sync" var="doneSpeak" x="-41" y="-63"></sync>
+			<nail x="575" y="200"/>
+		</transition>
+		<transition>
+			<source ref="8"/>
+			<target ref="7"/>
+			<sync kind="sync" var="speak" x="-160" y="-5"></sync>
+			<nail x="575" y="400"/>
+		</transition>
+	</module>
+</nta>

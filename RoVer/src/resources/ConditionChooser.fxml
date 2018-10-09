@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="132.0" prefWidth="319.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="127.0" prefWidth="319.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="319.0" text="Choose New Conditions" textAlignment="CENTER">
+               <padding>
+                  <Insets left="13.0" top="10.0" />
+               </padding>
+            </Label>
+            <Label />
+            <HBox prefHeight="32.0" prefWidth="198.0">
+               <children>
+                  <ComboBox fx:id="chooser" prefHeight="27.0" prefWidth="157.0" promptText="New Experiment">
+                     <HBox.margin>
+                        <Insets left="80.0" />
+                     </HBox.margin>
+                  </ComboBox>
+               </children>
+            </HBox>
+            <Label />
+            <HBox prefHeight="32.0" prefWidth="198.0">
+               <children>
+                  <Button fx:id="newAssisted" mnemonicParsing="false" prefWidth="100.0" text="Assisted">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="newNonassisted" mnemonicParsing="false" prefWidth="100.0" text="Non-assisted">
+                     <HBox.margin>
+                        <Insets left="40.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

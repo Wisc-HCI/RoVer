@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nta>
+	<name>Greeter</name>
+	<description>The robot greets the human. The human may or may not greet the robot back!</description>
+	<globals>
+		<var name="robot_greeted" type="bool" init="false"></var>
+		<var name="begin_greet" type="handshake"></var>
+		<var name="end_greet" type="handshake"></var>
+		<var name="human_greets" type="handshake"></var>
+		<var name="human_end_greet" type="handshake"></var>
+		<var name="human_ignores" type="handshake"></var>
+		<var name="Greet_with_speech" type="bool" init="true" parameter="true"  required="true" description="Set whether the robot greets the human with speech."></var>
+		<var name="Greet_with_handshake" type="bool" init="false" parameter="true"  required="true" description="Set whether the robot extends its arm for a handshake."></var>
+		<var name="Wait_for_response" type="bool" init="true" parameter="true"  required="true" description="Set whether the robot waits for the human to greet back."></var>
+	</globals>
+	<module>
+		<name>Robot</name>
+		<agent>robot</agent>
+		<locals>
+		</locals>
+		<state id="0" x="500" y="300">
+			<name x="58" y="-68">Waiting</name>
+			<type>INTERACTING</type>
+			<gaze>GAZE_AT</gaze>
+      		<gesture>GESTURE_NONE</gesture>
+		</state>
+		<state id="1" x="650" y="300">
+			<name x="228" y="-68">End</name>
+			<type>END</type>
+			<gaze>GAZE_AT</gaze>
+      		<gesture>GESTURE_NONE</gesture>
+		</state>
+		<state id="2" x="350" y="300">
+			<name x="-78" y="-68">Greeting</name>
+			<type>INTERACTING</type>
+			<gaze>GAZE_INTIMACY</gaze>
+      		<gesture>GESTURE_NONE</gesture>
+		</state>
+		<state id="3" x="200" y="300">
+			<name x="-290" y="-68">Start</name>
+			<type>START</type>
+			<gaze>GAZE_AT</gaze>
+      		<gesture>GESTURE_NONE</gesture>
+		</state>
+		<init ref="3"></init>
+		<transition>
+			<source ref="0"/>
+			<target ref="1"/>
+			<sync kind="sync" var="human_end_greet" x="110" y="-102"></sync>
+			<update var="robot_greeted" val="false" x="-50" y="-51"></update>
+			<nail x="575" y="200"/>
+		</transition>
+		<transition>
+			<source ref="0"/>
+			<target ref="1"/>
+			<sync kind="sync" var="human_ignores" x="110" y="-102"></sync>
+			<update var="robot_greeted" val="false" x="-50" y="-51"></update>
+			<nail x="575" y="400"/>
+		</transition>
+		<transition>
+			<source ref="2"/>
+			<target ref="0"/>
+			<guard var="Wait_for_response" rel="=" val="true" x="300" y="300"></guard>
+			<sync kind="sync" var="end_greet" x="-50" y="-51"></sync>
+			<update var="robot_greeted" val="true" x="-50" y="-51"></update>
+		</transition>
+		<transition>
+			<source ref="2"/>
+			<target ref="1"/>
+			<guard var="Wait_for_response" rel="=" val="false" x="300" y="300"></guard>
+			<sync kind="sync" var="end_greet" x="-50" y="-51"></sync>
+			<update var="robot_greeted" val="true" x="-50" y="-51"></update>
+		</transition>
+		<transition>
+			<source ref="3"/>
+			<target ref="2"/>
+			<sync kind="sync" var="begin_greet" x="-262" y="-51"></sync>
+		</transition>
+	</module>
+	<module>
+		<name>Human</name>
+		<agent>human</agent>
+		<locals>
+		</locals>
+		<state id="4" x="650" y="300">
+			<name x="-44" y="51">Ignored</name>
+			<type>IGNORE</type>
+		</state>
+		<state id="5" x="500" y="150">
+			<name x="-44" y="-153">ReturnedGreeting</name>
+			<type>READY</type>
+		</state>
+		<state id="6" x="350" y="300">
+			<name x="-248" y="-51">Present</name>
+			<type>READY</type>
+		</state>
+		<init ref="6"></init>
+		<init ref="4"></init>
+		<transition>
+			<source ref="4"/>
+			<target ref="5"/>
+			<guard var="Wait_for_response" rel="=" val="true" x="300" y="300"></guard>
+			<sync kind="sync" var="human_greets" x="-34" y="-34"></sync>
+			<guard var="robot_greeted" rel="=" val="true" x="300" y="300"></guard>
+		</transition>
+		<transition>
+			<source ref="4"/>
+			<target ref="4"/>
+			<guard var="Wait_for_response" rel="=" val="true" x="300" y="300"></guard>
+			<sync kind="sync" var="human_ignores" x="-34" y="-34"></sync>
+		</transition>
+		<transition>
+			<source ref="6"/>
+			<target ref="4"/>
+			<guard var="Wait_for_response" rel="=" val="true" x="300" y="300"></guard>
+			<sync kind="sync" var="human_ignores" x="-34" y="-34"></sync>
+		</transition>
+		<transition>
+			<source ref="6"/>
+			<target ref="5"/>
+			<guard var="Wait_for_response" rel="=" val="true" x="300" y="300"></guard>
+			<sync kind="sync" var="human_greets" x="-187" y="-85"></sync>
+			<guard var="robot_greeted" rel="=" val="true" x="300" y="300"></guard>
+		</transition>
+	</module>
+	<module>
+		<name>H_Speech</name>
+		<agent>human</agent>
+		<locals>
+		</locals>
+		<state id="7" x="650" y="300">
+			<name x="15" y="-26">HSpeaking</name>
+			<type>SPEAKING</type>
+		</state>
+		<state id="8" x="500" y="300">
+			<name x="-222" y="-26">HSilent</name>
+			<type>SILENT</type>
+		</state>
+		<init ref="8"></init>
+		<transition>
+			<source ref="7"/>
+			<target ref="8"/>
+			<sync kind="sync" var="human_end_greet" x="-119" y="-76"></sync>
+			<nail x="575" y="200"/>
+		</transition>
+		<transition>
+			<source ref="8"/>
+			<target ref="7"/>
+			<sync kind="sync" var="human_greets" x="-136" y="85"></sync>
+			<nail x="575" y="400"/>
+		</transition>
+	</module>
+	<module>
+		<name>R_Speech</name>
+		<agent>robot</agent>
+		<locals>
+		</locals>
+		<state id="7" x="650" y="300">
+			<name x="15" y="-26">Speaking</name>
+			<type>SPEAKING</type>
+		</state>
+		<state id="8" x="500" y="300">
+			<name x="-222" y="-26">Silent</name>
+			<type>SILENT</type>
+		</state>
+		<init ref="8"></init>
+		<transition>
+			<source ref="7"/>
+			<target ref="8"/>
+			<sync kind="sync" var="end_greet" x="-119" y="-76"></sync>
+			<nail x="575" y="200"/>
+		</transition>
+		<transition>
+			<source ref="8"/>
+			<target ref="8"/>
+			<sync kind="sync" var="end_greet" x="-119" y="-76"></sync>
+			<nail x="575" y="200"/>
+		</transition>
+		<transition>
+			<source ref="8"/>
+			<target ref="7"/>
+			<guard var="Greet_with_speech" rel="=" val="true" x="300" y="300"></guard>
+			<sync kind="sync" var="begin_greet" x="-136" y="85"></sync>
+			<nail x="575" y="400"/>
+		</transition>
+		<transition>
+			<source ref="8"/>
+			<target ref="8"/>
+			<guard var="Greet_with_speech" rel="=" val="false" x="300" y="300"></guard>
+			<sync kind="sync" var="begin_greet" x="-136" y="85"></sync>
+			<nail x="575" y="400"/>
+		</transition>
+	</module>
+	<module>
+		<name>R_Arm</name>
+		<agent>robot</agent>
+		<locals>
+		</locals>
+		<state id="0" x="650" y="300">
+			<name x="15" y="-26">Retracted</name>
+			<type>RETRACTED</type>
+		</state>
+		<state id="1" x="500" y="300">
+			<name x="-222" y="-26">Extended</name>
+			<type>EXTENDED</type>
+		</state>
+		<init ref="0"></init>
+		<transition>
+			<source ref="0"/>
+			<target ref="1"/>
+			<guard var="Greet_with_handshake" rel="=" val="true" x="300" y="300"></guard>
+			<sync kind="sync" var="begin_greet" x="-119" y="-76"></sync>
+		</transition>
+		<transition>
+			<source ref="0"/>
+			<target ref="0"/>
+			<guard var="Greet_with_handshake" rel="=" val="false" x="300" y="300"></guard>
+			<sync kind="sync" var="begin_greet" x="-119" y="-76"></sync>
+		</transition>
+		<transition>
+			<source ref="1"/>
+			<target ref="0"/>
+			<sync kind="sync" var="end_greet" x="-119" y="-76"></sync>
+		</transition>
+		<transition>
+			<source ref="0"/>
+			<target ref="0"/>
+			<sync kind="sync" var="end_greet" x="-119" y="-76"></sync>
+		</transition>
+	</module>
+</nta>

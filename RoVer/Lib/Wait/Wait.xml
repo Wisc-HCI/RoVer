@@ -1,0 +1,239 @@
+<nta>
+  <name>Wait</name>
+  <description>The robot waits for the human for a pre-specified amount of time.</description>
+  <globals>
+  	<var name="speak" type="handshake"></var>
+  	<var name="donespeak" type="handshake"></var>
+	<var name="ignoredFoundFace" type="handshake"></var>
+	<var name="ignoredLostAttention" type="handshake"></var>
+	<var name="busyReadyFoundFace" type="handshake"></var>
+	<var name="readyLostFace" type="handshake"></var>
+	<var name="endFaceTracker" type="handshake"></var>
+  	<var name="spoke" type="bool" init="false"></var>
+  	<var name="ended" type="bool" init="false"></var>
+    	<var name="hSpeakLock" type="bool" init="false"></var>
+	<var name="look_at_people" type="bool" init="false" parameter="true"  required="true" description="Enables face tracking, which allows the robot to meet the gaze of anyone in its vicinity."></var>
+    	<var name="allow_speech" type="bool" init="true" parameter="true"  required="true" description="Allows a human to say something to the robot to override its wait time."></var>
+    	<var name="wait time (seconds)" type="int" init="5" bound="0..30" parameter="true" required="true" prismIgnore="true" description="Number of seconds for the robot to wait."></var>
+  </globals>
+  <module>
+    <name>Robot</name>
+    <agent>robot</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Start</name>
+      <type>START</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">End</name>
+      <type>END</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <init ref="0"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <update var="ended" val="true" x="300" y="300"></update>
+      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+      <guard var="allow_speech" rel="=" val="true" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <guard var="spoke" rel="=" val="false" x="300" y="300"></guard>
+      <update var="ended" val="true" x="300" y="300"></update>
+      <sync kind="sync" var="endFaceTracker" x="300" y="300"></sync>
+      <guard var="hSpeakLock" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+  </module>
+  <module>
+    <name>Human</name>
+    <agent>human</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Present</name>
+      <type>READY</type>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Busy</name>
+      <type>BUSY</type>
+    </state>
+    <state id="2" x="300" y="300">
+      <name x="300" y="300">Ignored</name>
+      <type>IGNORE</type>
+    </state>
+    <state id="3" x="300" y="300">
+      <name x="300" y="300">Notify</name>
+      <type>READY</type>
+    </state>
+    <init ref="0"></init>
+    <init ref="1"></init>
+    <init ref="2"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="3"/>
+      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <guard var="spoke" rel="=" val="false" x="300" y="300"></guard>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+      <guard var="allow_speech" rel="=" val="true" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="3"/>
+      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+      <guard var="allow_speech" rel="=" val="true" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="3"/>
+      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+      <guard var="allow_speech" rel="=" val="true" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="3"/>
+      <target ref="0"/>
+      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+    </transition>
+
+    <!--gaze tracking transitions-->
+    <transition>
+      <source ref="2"/>
+      <target ref="1"/>
+      <sync kind="sync" var="ignoredFoundFace" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="2"/>
+      <sync kind="sync" var="ignoredLostAttention" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="0"/>
+      <target ref="0"/>
+      <sync kind="sync" var="busyReadyFoundFace" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="1"/>
+      <sync kind="sync" var="busyReadyFoundFace" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="0"/>
+      <target ref="0"/>
+      <sync kind="sync" var="readyLostFace" x="300" y="300"></sync>
+    </transition>
+  </module>
+  <module>
+    <name>H_Speech</name>
+    <agent>human</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Silent</name>
+      <type>SILENT</type>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Speech</name>
+      <type>SPEAKING</type>
+    </state>
+    <init ref="0"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <update var="hSpeakLock" val="true" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+      <update var="spoke" val="true" x="300" y="300"></update>
+      <update var="hSpeakLock" val="false" x="300" y="300"></update>
+    </transition>
+  </module>
+  <module>
+    <name>R_Gaze</name>
+    <agent>robot</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Face_None</name>
+      <type>LOOKAWAY</type>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Face_search</name>
+      <type>GLANCEAT_NONREFERENCE</type>
+    </state>
+    <state id="2" x="300" y="300">
+      <name x="300" y="300">Face_found</name>
+      <type>LOOKAT</type>
+    </state>
+    <init ref="0"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <guard var="look_at_people" rel="=" val="true" x="300" y="300"></guard>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="2"/>
+      <!--IF ignored, transition human to busy-->
+      <sync kind="sync" var="ignoredFoundFace" x="300" y="300"></sync>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="1"/>
+      <!--transition back to ignored-->
+      <sync kind="sync" var="ignoredLostAttention" x="300" y="300"></sync>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="2"/>
+      <!--IF busy or ready, don't transition the human anywhere!-->
+      <sync kind="sync" var="busyReadyFoundFace" x="300" y="300"></sync>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="1"/>
+      <!--IF ready, don't transition the human anywhere!-->
+      <sync kind="sync" var="readyLostFace" x="300" y="300"></sync>
+      <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="0"/>
+      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="0"/>
+      <target ref="0"/>
+      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="endFaceTracker" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="0"/>
+      <sync kind="sync" var="endFaceTracker" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="0"/>
+      <target ref="0"/>
+      <sync kind="sync" var="endFaceTracker" x="300" y="300"></sync>
+    </transition>
+  </module>
+</nta>

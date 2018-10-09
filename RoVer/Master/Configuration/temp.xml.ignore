@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nta>
+	<name>temp</name>
+	<globals>
+	</globals>
+	<module>
+		<name>temp</name>
+		<locals>
+		</locals>
+	</module>
+</nta>

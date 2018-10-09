@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nta>
+	<name>unnamed_project</name>
+	<iglobals>
+	</iglobals>
+	<group id="0">
+		<name>greet_human</name>
+		<micro id="0">
+			<name>greeter</name>
+		</micro>
+	</group>
+	<group id="1">
+		<name>say_goodbye</name>
+		<micro id="1">
+			<name>farewell</name>
+		</micro>
+	</group>
+	<transition>
+		<source ref="0"/>
+		<target ref="1"/>
+	</transition>
+</nta>

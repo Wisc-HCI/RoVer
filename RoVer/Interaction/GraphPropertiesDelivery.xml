@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nta>
+	<!-- Greeting properties -->
+	<property>
+		<ID>0</ID>
+		<class>Greeting Flubs</class>
+		<content>P>=1 [ "Greeter" | "Wait" ];</content>
+		<ties>init</ties>
+		<bugtrackID>greet</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>1-6.png</icon>
+		<description>The interaction must start with a greeting or a wait.</description>
+	</property>
+	<property>
+		<ID>1</ID>
+		<class>Greeting Flubs</class>
+		<content>filter(print, Pmax=? ["deadlock"], "Greeter"&amp;end&amp;"ignore");</content>
+		<ties>group</ties>
+		<bugtrackID>greet_ignore</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>1-2.png</icon>
+		<description>Interaction should not end if the human ignores the robot after the greeting.</description>
+	</property>
+	<property>
+		<ID>2</ID>
+		<class>Greeting Flubs</class>
+		<!--<content>filter(print, Pmax=? [!(("Greeter" | "Wait") U "ready_overall")], "Greeter"&amp;end&amp;"ignore");</content>-->
+		<content>filter(print, Pmax=? [!((  "speaks" => ((X X X !"speaks") | (X X X "ready_overall"))   ) U "ready_overall")], "Greeter"&amp;end&amp;"ignore");</content>
+		<ties>group</ties>
+		<bugtrackID>noninterruptability</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>1-5.png</icon>
+		<description>If the human does not respond after a greeting, wait for them to acknowledge the robot. It is OK to periodically use speech to gain their attention.</description>
+	</property>
+	<property>
+		<ID>11</ID>
+		<class>Greeting Flubs</class>
+		<!--<content>filter(print, Pmax=? [!(("Greeter" | "Wait") U "ready_overall")], "Greeter"&amp;end&amp;"ignore");</content>-->
+		<content>P>=1 [!((  "speaks" => ((X X X !"speaks") | (X X X "ready_overall"))   ) U "ready_overall")];</content>
+		<ties>init</ties>
+		<bugtrackID>noninterruptability</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>1-3.png</icon>
+		<description>After the first greeting is acknowledged, don't issue any more greetings.</description>
+	</property>
+
+	<!-- Farewell properties -->
+	<property>
+		<ID>3</ID>
+		<class>Farewell Flubs</class>
+		<content>filter(print, Pmax=? [ X "Farewell"], ("ignore_overall"|"busy_overall")&amp;(!"Farewell"));</content>
+		<ties>group</ties>
+		<bugtrackID>farewell_ignore</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>4-2.png</icon>
+		<description>The robot should not say goodbye to a busy or suspended human.</description>
+	</property>
+	<property>
+		<ID>4</ID>
+		<class>Farewell Flubs</class>
+		<content>filter(print, Pmax=? [ !("Farewell")], "deadlock");</content>
+		<ties>group</ties>
+		<bugtrackID>farewell_deadlock</bugtrackID>
+		<initVal>true</initVal>
+		<context label="In">true</context>
+		<icon>4-3.png</icon>
+		<description>the interaction might end! The interaction should end with a farewell.</description>
+	</property>
+	<property>
+		<ID>5</ID>
+		<class>Farewell Flubs</class>
+		<content>P>=1 [F "Farewell"];</content>
+		<ties>interaction</ties>
+		<bugtrackID>farewell_reachability</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>4-1.png</icon>
+		<description>There exists at least one path through the interaction in which the robot never says "Farewell".</description>
+	</property>
+
+	<!-- Task/social Properties -->
+	<property>
+		<ID>6</ID>
+		<class>Task-Related Errors</class>
+		<!--<content>A [F "Instruction"];</content>-->
+		<content>P>=1 [F "Instruction"];</content>
+		<ties>init</ties>
+		<bugtrackID>instruction_reachability</bugtrackID>
+		<initVal>true</initVal>
+		<context label="At some point after">true</context>
+		<icon>7-8.png</icon>
+		<description>the robot must issue an instruction.</description>
+	</property>
+	<property>
+		<ID>7</ID>
+		<class>Task-Related Errors</class>
+		<!--<content>filter(print, A [F "Handoff"], "Instruction");</content>-->
+		<content>filter(print, Pmax=? [!(F "Handoff")], "Instruction");</content>
+		<ties>group</ties>
+		<bugtrackID>handoff_reachability</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>7-7.png</icon>
+		<description>the robot must attempt a handoff after the instruction is successfully completed.</description>
+	</property>
+	<property>
+		<ID>8</ID>
+		<class>Task-Related Errors</class>
+		<content>filter(print, A [F ("Handoff"&amp;end&amp;"ready_overall")], "Handoff");</content>
+		<ties>group</ties>
+		<bugtrackID>handoff_liveness</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>7-6.png</icon>
+		<description>the robot eventually performs the handoff successfully.</description>
+	</property>
+	<property>
+		<ID>12</ID>
+		<class>Task-Related Errors</class>
+		<content>filter(print, A [! (F "Instruction")], "Handoff");</content>
+		<ties>group</ties>
+		<bugtrackID>handoff_to_instruct</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>7-2.png</icon>
+		<description>don't issue another instruction!</description>
+	</property>
+
+	<property>
+		<ID>25</ID>
+		<class>QA Flubs</class>
+		<logic>LTL</logic>
+		<content>filter(print, Pmin=? [!(F "Answer"&amp;(!start)&amp;(!end))], "Answer"&amp;end&amp;"ready_overall");</content>
+		<!--<content>Pmin=? [(G F "Answer"&amp;end&amp;"ready_overall"&amp;(!"deadlock"))];</content>-->
+		<ties>group</ties>
+		<bugtrackID>infinite_answers</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>5-1.png</icon>
+		<description>After successfully answering a question, the human SHOULD BE ABLE TO ask infinitely more questions if they want.</description>
+	</property>
+	<property>
+		<ID>26</ID>
+		<class>QA Flubs</class>
+		<logic>LTL</logic>
+		<!--<content>filter(print, Pmin=? [ !( (!"deadlock") => ( F (G !("Answer"&amp;end&amp;"ready_overall"))))], "Answer"&amp;end&amp;"ready_overall");</content>-->
+		<content>filter(print, Pmin=? [ !( !( F "Answer"&amp;(!start)&amp;(!end)))], "Answer"&amp;end&amp;"ready_overall");</content>
+		<!--<content>filter(print, Pmin=? [ !(F (G !("Answer"&amp;start)))], "Answer"&amp;end&amp;"ready_overall");</content>-->
+		<!--<content>E [ (F "Answer"&amp;end&amp;"ready_overall") => !(G F "Answer"&amp;(!"deadlock"))];</content>-->
+		<ties>group</ties>
+		<bugtrackID>exit_answering</bugtrackID>
+		<initVal>true</initVal>
+		<context>false</context>
+		<icon>5-7.png</icon>
+		<description>After successfully answering a question, the human DOES NOT NEED TO ask more questions.</description>
+	</property>
+	
+	<!-- Instruction properties -->
+	<property>
+		<ID>9</ID>
+		<class>Instruction Flubs</class>
+		<content>filter(print, Pmax=? [!( (!"Handoff") W ("Answer"&amp;end&amp;"ready_overall") )], "Instruction"&amp;end&amp;"ignore");</content>
+		<ties>group</ties>
+		<bugtrackID>inst_susp_handoff</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>6-6.png</icon>
+		<description>do not use the handoff microinteraction until the human's question has been answered!</description>
+	</property>
+	<property>
+		<ID>15</ID>
+		<class>Instruction Flubs</class>
+		<content>filter(print, Pmax=? [!( !"deadlock" => (X( (!"Instruction") W ("Answer"&amp;end&amp;"ready_overall") )) )], "Instruction"&amp;end&amp;"ignore");</content>
+		<ties>group</ties>
+		<bugtrackID>inst_susp_norepeat</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>6-4.png</icon>
+		<description>do not use the instruction microinteraction again until the human's question has been answered!</description>
+	</property>
+	<property>
+		<ID>16</ID>
+		<class>Instruction Flubs</class>
+		<content>filter(print, Pmax=? [!( (!"Handoff") W ("ready_overall") )], "Instruction"&amp;end&amp;"busy");</content>
+		<ties>group</ties>
+		<bugtrackID>inst_busy_handoff</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>6-7.png</icon>
+		<description>do not use the handoff microinteraction until the human is ready to move on!</description>
+	</property>
+	<property>
+		<ID>17</ID>
+		<class>Instruction Flubs</class>
+		<content>filter(print, Pmax=? [!( !"deadlock" => (X( (!"Instruction") W ("ready_overall") )) )], "Instruction"&amp;end&amp;"busy");</content>
+		<ties>group</ties>
+		<bugtrackID>inst_busy_norepeat</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>6-5.png</icon>
+		<description>do not use the instruction microinteraction again until the human is ready to move on!</description>
+	</property>
+	<!-- Answering -->
+	<property>
+		<ID>13</ID>
+		<class>Instruction Flubs</class>
+		<content>filter(print, Pmax=? [!((F ("Answer"&amp;end&amp;"ready")) U ("ready_overall"))], "Instruction"&amp;end&amp;"ignore");</content>
+		<ties>group</ties>
+		<bugtrackID>inst_susp_answer</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>6-2.png</icon>
+		<description>if the human wants to ask a question, the question must be answered before being ready to move on with the interaction!</description>
+	</property>
+	<property>
+		<ID>14</ID>
+		<class>Instruction Flubs</class>
+		<content>filter(print, Pmax=? [!(("speaks") U ("Answer"))], "Instruction"&amp;end&amp;"ignore");</content>
+		<ties>group</ties>
+		<bugtrackID>inst_susp_prelude</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>6-8.png</icon>
+		<description>if the human wants to ask a question, there should be some robot speech before it listens for a question.</description>
+	</property>
+	<!-- Busy -->
+	<property>
+		<ID>18</ID>
+		<class>Instruction Flubs</class>
+		<content>filter(print, Pmax=? [!( X "Remark" )], "Instruction"&amp;end&amp;"busy");</content>
+		<ties>group</ties>
+		<bugtrackID>inst_busy_remark</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>6-3.png</icon>
+		<description>if the human is busy then provide a helpful remark!</description>
+	</property>
+	<property>
+		<ID>19</ID>
+		<class>Instruction Flubs</class>
+		<content>filter(print, Pmax=? [!((F ("Answer"&amp;end&amp;"ready")) | (F ("Ask"&amp;end&amp;"ready")) U ("ready_overall"))], "Instruction"&amp;end&amp;"busy");</content>
+		<ties>group</ties>
+		<bugtrackID>inst_busy_askanswer</bugtrackID>
+		<initVal>true</initVal>
+		<context label="After">true</context>
+		<icon>6-1.png</icon>
+		<description>if the human is busy then eventually there should be a path to Ask or Answer before the human is ready to move on to the handoff.</description>
+	</property>
+
+	<!--Turn taking-->
+	<property>
+		<ID>20</ID>
+		<class>Turn-taking Flubs</class>
+		<logic>LTL</logic>
+		<content>filter(print, Pmax=? [(!(X X X"deadlock")) &amp; (X X X "speaksFirst")], "speaks"&amp;(!"hspeaks"));</content>
+		<ties>group</ties>
+		<bugtrackID>double_robot_speech</bugtrackID>
+		<initVal>true</initVal>
+		<context label="There is a sequence of microinteractions starting from">true</context>
+		<icon>2-6.png</icon>
+		<description>in which the ROBOT speaks twice in a row.</description>
+	</property>
+	<property>
+		<ID>21</ID>
+		<class>Turn-taking Flubs</class>
+		<logic>LTL</logic>
+		<content>filter(print, Pmax=? [(!(X "deadlock")) &amp; (X ("hspeaksFirst"&amp;(hstate_overall=0)))], (hstate_overall=0)&amp;"hspeaks"&amp;end&amp;(!"speaks"));</content>
+		<ties>group</ties>
+		<bugtrackID>double_human_speech</bugtrackID>
+		<initVal>true</initVal>
+		<context label="There is a sequence of microinteractions starting from">true</context>
+		<icon>2-1.png</icon>
+		<description>in which the robot expects the HUMAN to speak twice in a row.</description>
+	</property>
+</nta>

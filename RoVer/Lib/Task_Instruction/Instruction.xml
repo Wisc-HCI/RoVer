@@ -1,0 +1,172 @@
+<nta>
+  <name>Instruction</name>
+  <description>The robot instructs the human to perform a task and waits for the task to be complete. At the end, the human will either have completed it successfully, hesitated and not performed the task, or said "I have a question."</description>
+  <globals>
+    <var name="Instruction" type="str" init="" parameter="true" required="true" prismIgnore="true" description="The instruction that the robot will provide the human."></var>
+    <var name="summarize" type="bool" init="false" parameter="false"></var>
+    <var name="r_speaking" type="bool" init="false"></var>
+    <var name="h_speaking" type="bool" init="false"></var>
+    <var name="r_waiting" type="bool" init="false"></var>
+    <var name="doneInstructing" type="handshake"></var>
+    <var name="r_speak" type="handshake"></var>
+    <var name="h_speak" type="handshake"></var>
+    <var name="nospeak" type="handshake"></var>
+  </globals>
+  <module>
+    <name>Robot</name>
+    <agent>robot</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">End</name>
+      <type>END</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Waiting</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_REFERENCE</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="2" x="300" y="300">
+      <name x="300" y="300">Instructing</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_REFERENCE</gaze>
+      <gesture>GESTURE_DIECTIC</gesture>
+    </state>
+    <state id="3" x="300" y="300">
+      <name x="300" y="300">Summarizing</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="4" x="300" y="300">
+      <name x="300" y="300">Start</name>
+      <type>START</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <init ref="4"></init>
+    <transition>
+      <source ref="4"/>
+      <target ref="2"/>
+      <guard var="summarize" rel="=" val="false" x="300" y="300"></guard>
+      <sync kind="sync" var="r_speak" x="300" y="300"></sync>
+      <update var="r_speaking" val=" true" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <guard var="h_speaking" rel="=" val="false" x="300" y="300"></guard>
+      <update var="r_waiting" val="false" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="1"/>
+      <sync kind="sync" var="doneInstructing" x="300" y="300"></sync>
+      <guard var="r_speaking" rel="=" val=" false" x="300" y="300"></guard>
+      <update var="r_waiting" val="true" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="3"/>
+      <target ref="2"/>
+      <sync kind="sync" var="r_speak" x="300" y="300"></sync>
+      <update var="r_speaking" val=" true" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="4"/>
+      <target ref="3"/>
+      <guard var="summarize" rel="=" val="true" x="300" y="300"></guard>
+    </transition>
+  </module>
+  <module>
+    <name>R_Speech</name>
+    <agent>robot</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Speaking</name>
+      <type>SPEAKING</type>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Silent</name>
+      <type>SILENT</type>
+    </state>
+    <init ref="1"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <update var="r_speaking" val=" false" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="r_speak" x="300" y="300"></sync>
+    </transition>
+  </module>
+  <module>
+    <name>Human</name>
+    <agent>human</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Breakdown_request</name>
+      <type>IGNORE</type>
+      <breakdown/>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Finish</name>
+      <type>READY</type>
+    </state>
+    <state id="2" x="300" y="300">
+      <name x="300" y="300">Acting</name>
+      <type>BUSY</type>
+      <breakdown/>
+    </state>
+    <state id="3" x="300" y="300">
+      <name x="300" y="300">Listening</name>
+      <type>READY</type>
+      <breakdown/>
+    </state>
+    <init ref="3"></init>
+    <transition>
+      <source ref="3"/>
+      <target ref="2"/>
+      <sync kind="sync" var="doneInstructing" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="1"/>
+      <guard var="r_waiting" rel="=" val="true" x="300" y="300"></guard>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="0"/>
+      <guard var="r_waiting" rel="=" val="true" x="300" y="300"></guard>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
+      <update var="h_speaking" val=" true" x="300" y="300"></update>
+    </transition>
+  </module>
+  <module>
+    <name>H_Speech</name>
+    <agent>human</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">H_Speaking</name>
+      <type>SPEAKING</type>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">H_Silent</name>
+      <type>SILENT</type>
+    </state>
+    <init ref="1"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <update var="h_speaking" val=" false" x="300" y="300"></update>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
+    </transition>
+  </module>
+</nta>

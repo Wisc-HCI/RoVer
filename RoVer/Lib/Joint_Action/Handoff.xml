@@ -1,0 +1,132 @@
+<nta>
+  <name>Handoff</name>
+  <description>The robot hands something to the human, OR receives something from the human.</description>
+  <globals>
+    <var name="extend" type="handshake"></var>
+    <var name="contact" type="handshake"></var>
+    <var name="retract" type="handshake"></var>
+    <var name="end" type="bool" init="false"></var>    
+    <var name="done" type="bool" init="false"></var>
+    <var name="timeout" type="handshake"></var>
+    <!--<var name="give-receive" type="nominal" init="" parameter="true" required="false" prismIgnore="true">
+      <val>give</val>
+      <val>receive</val>
+    </var>-->
+  </globals>
+  <module>
+    <name>Robot</name>
+    <agent>robot</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Start</name>
+      <type>START</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Extending</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_REFERENCE</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="2" x="300" y="300">
+      <name x="300" y="300">Releasing</name>
+      <type>INTERACTING</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <state id="3" x="300" y="300">
+      <name x="300" y="300">End</name>
+      <type>END</type>
+      <gaze>GAZE_AT</gaze>
+      <gesture>GESTURE_NONE</gesture>
+    </state>
+    <init ref="0"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <sync kind="sync" var="extend" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="2"/>
+      <sync kind="sync" var="contact" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="3"/>
+      <sync kind="sync" var="timeout" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="2"/>
+      <target ref="3"/>
+      <sync kind="sync" var="retract" x="300" y="300"></sync>
+      <update var="end" val="true" x="300" y="300"></update>
+      <guard var="done" rel="=" val="true" x="300" y="300"></guard>
+    </transition>
+  </module>
+  <module>
+    <name>Human</name>
+    <agent>human</agent>
+    <locals></locals>
+    <state id="0" x="300" y="300">
+      <name x="300" y="300">Present</name>
+      <type>READY</type>
+    </state>
+    <state id="1" x="300" y="300">
+      <name x="300" y="300">Contacted</name>
+      <type>BUSY</type>
+    </state>
+    <state id="2" x="300" y="300">
+      <name x="300" y="300">IsBusy</name>
+      <type>BUSY</type>
+    </state>
+    <init ref="0"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <sync kind="sync" var="contact" x="300" y="300"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <guard var="end" rel="=" val="false" x="300" y="300"></guard>
+      <update var="done" val="true" x="300" y="300"></update>
+    </transition> 
+    <transition>
+      <source ref="0"/>
+      <target ref="2"/>
+      <sync kind="sync" var="timeout" x="300" y="300"></sync>
+    </transition>   
+  </module>
+  <module>
+    <name>R_Arm</name>
+    <agent>robot</agent>
+    <locals>
+    </locals>
+    <state id="1" x="650" y="300">
+      <name x="15" y="-26">Arm_Extended</name>
+      <type>EXTENDED</type>
+    </state>
+    <state id="0" x="500" y="300">
+      <name x="-222" y="-26">Arm_Retracted</name>
+      <type>RETRACTED</type>
+    </state>
+    <init ref="0"></init>
+    <transition>
+      <source ref="0"/>
+      <target ref="1"/>
+      <sync kind="sync" var="extend" x="-119" y="-76"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="retract" x="-136" y="85"></sync>
+    </transition>
+    <transition>
+      <source ref="1"/>
+      <target ref="0"/>
+      <sync kind="sync" var="timeout" x="-136" y="85"></sync>
+    </transition>
+  </module>
+</nta>

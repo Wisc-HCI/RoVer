@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="396.0" prefWidth="559.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER" layoutX="71.0" prefHeight="396.0" prefWidth="488.0" style="-fx-background-color: white;">
+         <children>
+            <ListView fx:id="conflictBox" prefHeight="327.0" prefWidth="438.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ListView>
+            <HBox alignment="CENTER" prefHeight="44.0" prefWidth="351.0" spacing="50.0">
+               <children>
+                  <Button fx:id="createButton" mnemonicParsing="false" text="OK" />
+                  <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="25.0" right="25.0" />
+         </padding>
+      </VBox>
+      <Text layoutX="28.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jams, Flubs, and Conflicts" wrappingWidth="61.000001057982445" />
+   </children>
+</AnchorPane>
