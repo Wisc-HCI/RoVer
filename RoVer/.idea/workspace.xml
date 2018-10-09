@@ -60,8 +60,8 @@
       <file leaf-file-name="MainController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controller/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="809" column="25" selection-start-line="809" selection-start-column="25" selection-end-line="809" selection-end-column="25" />
+            <state relative-caret-position="10278">
+              <caret line="788" column="56" selection-start-line="788" selection-start-column="56" selection-end-line="788" selection-end-column="56" />
               <folding>
                 <element signature="e#34658#34659#0" expanded="true" />
                 <element signature="e#34743#34744#0" expanded="true" />
@@ -126,6 +126,8 @@
       <find>HYBRID</find>
       <find>prism.setEngine</find>
       <find>resetNao</find>
+      <find>simulate</find>
+      <find>beginSimu</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -294,12 +296,12 @@
       <option name="presentableId" value="Default" />
       <updated>1538953115803</updated>
       <workItem from="1538953117404" duration="10914000" />
-      <workItem from="1539051216479" duration="860000" />
+      <workItem from="1539051216479" duration="1397000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11774000" />
+    <option name="totallyTimeSpent" value="12311000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="25" y="23" width="1400" height="789" extended-state="0" />
@@ -320,6 +322,7 @@
       <window_info id="Designer" order="2" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32867134" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -331,7 +334,6 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32867134" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,8 +492,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="809" column="25" selection-start-line="809" selection-start-column="25" selection-end-line="809" selection-end-column="25" />
+        <state relative-caret-position="10278">
+          <caret line="788" column="56" selection-start-line="788" selection-start-column="56" selection-end-line="788" selection-end-column="56" />
           <folding>
             <element signature="e#34658#34659#0" expanded="true" />
             <element signature="e#34743#34744#0" expanded="true" />

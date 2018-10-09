@@ -11,7 +11,7 @@ init
 	Greet_with_handshake=false &
 	Wait_for_response=true &
 	st_m=3 &
-	
+	(st_n=2 | st_n=0) &
 	st_o=1 &
 	st_p=1 &
 	st_q=0
