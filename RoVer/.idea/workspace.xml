@@ -48,7 +48,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controller/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
@@ -57,11 +57,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DotExporter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/checkers/DotExporter.java">
+      <file leaf-file-name="MainController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/controller/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="47" column="44" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
+            <state relative-caret-position="233">
+              <caret line="809" column="25" selection-start-line="809" selection-start-column="25" selection-end-line="809" selection-end-column="25" />
+              <folding>
+                <element signature="e#34658#34659#0" expanded="true" />
+                <element signature="e#34743#34744#0" expanded="true" />
+                <element signature="e#71167#71168#0" expanded="true" />
+                <element signature="e#71236#71237#0" expanded="true" />
+                <element signature="e#77727#77728#0" expanded="true" />
+                <element signature="e#77812#77813#0" expanded="true" />
+                <element signature="e#86128#86129#0" expanded="true" />
+                <element signature="e#86205#86206#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -115,12 +125,12 @@
       <find>EXPLICIT</find>
       <find>HYBRID</find>
       <find>prism.setEngine</find>
+      <find>resetNao</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/controller/MainController.java" />
         <option value="$PROJECT_DIR$/src/controller/NetworkPropagator.java" />
         <option value="$PROJECT_DIR$/src/model/Group.java" />
         <option value="$PROJECT_DIR$/src/checkers/PrismThread.java" />
@@ -132,6 +142,7 @@
         <option value="$PROJECT_DIR$/src/checkers/GraphChecker.java" />
         <option value="$PROJECT_DIR$/src/checkers/ConcurrentChecker.java" />
         <option value="$PROJECT_DIR$/src/controller/Main.java" />
+        <option value="$PROJECT_DIR$/src/controller/MainController.java" />
       </list>
     </option>
   </component>
@@ -152,8 +163,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="153" />
-    <option name="y" value="501" />
+    <option name="x" value="25" />
+    <option name="y" value="23" />
     <option name="width" value="1400" />
     <option name="height" value="789" />
   </component>
@@ -283,15 +294,15 @@
       <option name="presentableId" value="Default" />
       <updated>1538953115803</updated>
       <workItem from="1538953117404" duration="10914000" />
-      <workItem from="1539051216479" duration="338000" />
+      <workItem from="1539051216479" duration="860000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11252000" />
+    <option name="totallyTimeSpent" value="11774000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="153" y="501" width="1400" height="789" extended-state="0" />
+    <frame x="25" y="23" width="1400" height="789" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -400,13 +411,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="1418" column="60" selection-start-line="1418" selection-start-column="60" selection-end-line="1418" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Group.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="12795">
@@ -481,6 +485,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="809" column="25" selection-start-line="809" selection-start-column="25" selection-end-line="809" selection-end-column="25" />
+          <folding>
+            <element signature="e#34658#34659#0" expanded="true" />
+            <element signature="e#34743#34744#0" expanded="true" />
+            <element signature="e#71167#71168#0" expanded="true" />
+            <element signature="e#71236#71237#0" expanded="true" />
+            <element signature="e#77727#77728#0" expanded="true" />
+            <element signature="e#77812#77813#0" expanded="true" />
+            <element signature="e#86128#86129#0" expanded="true" />
+            <element signature="e#86205#86206#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

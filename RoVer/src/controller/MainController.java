@@ -805,50 +805,21 @@ public class MainController implements Initializable {
             return;
         }
 
-        try {
-            Runtime.getRuntime().exec("ssh nao@" + IP + " python prepareExperiment.py");         // for UW Net
+        exportDesign();
 
-            Thread.sleep(2000);
-            exportDesign();
-            if (!interaction.getTutorial())
-                Runtime.getRuntime().exec("mv " + participantID + "_" + interaction.getCurrDesign() + ".xml interaction.xml");
-            else
-                Runtime.getRuntime().exec("mv " + participantID + "_tutorial.xml interaction.xml");
-            Thread.sleep(100);
-            Runtime.getRuntime().exec("scp interaction.xml nao@" + IP + ":~/");
-            System.out.println("scp interaction.xml nao@" + IP + ":~/");
-            Thread.sleep(2000);
-            Runtime.getRuntime().exec("ssh nao@" + IP + " python exec/try.py &");
-            Thread.sleep(1000);
-
-            StopSimulatingController ssc = new StopSimulatingController(this);
-            ssc.display();
-
-        } catch (IOException | InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        // call simulator
     }
 
     public void endSimulate() {
 
-        try {
-            Runtime.getRuntime().exec("ssh nao@" + IP + " ps aux | grep -ie exec/try.py | awk '{print $2}' | xargs kill -15");
-            Thread.sleep(2000);
-            Runtime.getRuntime().exec("ssh nao@" + IP + " python prepareExperiment.py");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }         // for UW Net
-        catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        //end the simulation
 
         resetNao();
     }
 
-    // Undo the last action
+    public void resetNao() {
+
+    }
 
     // Create and add a new Project to the working directory
     public void newProject(ActionEvent event) {
@@ -931,17 +902,6 @@ public class MainController implements Initializable {
                 }
             }
         }
-    }
-
-    public void resetNao() { // IP is 192.168.1.202
-        try {
-            Runtime.getRuntime().exec("ssh nao@" + IP + " python prepareExperiment.py");
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
     }
 
     public int getFlag() {
