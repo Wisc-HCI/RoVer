@@ -12,7 +12,7 @@
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="450.0" style="-fx-background-color: white;">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Model Checker?" textAlignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Exit RoVer?" textAlignment="CENTER">
                <font>
                   <Font name="Calibri Light" size="25.0" />
                </font>
