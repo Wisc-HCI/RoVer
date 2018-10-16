@@ -110,7 +110,8 @@ public class MainController implements Initializable {
     private TreeView violations;
     @FXML
     private AnchorPane conditionalPane;
-
+    @FXML
+    private TitledPane paramTab;
 
     // Flags for various conditions
     private int buttonFlag;
@@ -271,6 +272,9 @@ public class MainController implements Initializable {
 
         addIPEventHandler(interactionPane);
         setEditorAnchor(interactionPane);
+        editorPaneAnchor.setStyle("-fx-background-color: #F9FFFF");
+        interactionPane.setStyle("-fx-border-color: gray");
+        interactionPane.setStyle("-fx-border-style: dashed");
 
         staticTooltips = new HashMap<>();
 
@@ -544,19 +548,14 @@ public class MainController implements Initializable {
         deleteTrans = null;
 
         // Currently set to empty declarations
+        Checker c = interaction.getChecker();
         interaction = new Interaction(graphProperties);
         interaction.setCurrInstruction(currInstruction);
+        interaction.setChecker(c, this, null);
         currGroupTransition = null;
         interactionPane.removeAllCollections();
 
-        if (wasTutorial) {
-            interaction.setCurrDesign(currDesign);
-        } else {
-            if (currDesign.equals("Delivery")) {
-                interaction.setCurrDesign("Instruction-Action");
-            } else
-                interaction.setCurrDesign("Delivery");
-        }
+        interaction.setCurrDesign(currDesign);
 
         if (initBlankInteraction)
             readInteraction();
@@ -566,6 +565,8 @@ public class MainController implements Initializable {
                 micro.build();
             }
         }
+
+        /*
         if (restartPrism) {
             interaction.nullifyChecker();
             PrismThread pt = new PrismThread(console, interaction, this);
@@ -578,6 +579,9 @@ public class MainController implements Initializable {
                 e.printStackTrace();
             }
         }
+        */
+        violationsPane = null;
+        updateConflictPane();
 
         new Notifier(interaction, this, parameterizer, isNonAssisted);
 
@@ -1195,6 +1199,8 @@ public class MainController implements Initializable {
 
             }
 
+            me.consume();
+
         });
 
         node.addEventHandler(MouseDragEvent.MOUSE_RELEASED, (MouseEvent me) -> {
@@ -1284,6 +1290,7 @@ public class MainController implements Initializable {
 
             }
         });
+
     }
 
     public void addMicroToGroup(Group node, File file) {
@@ -1927,6 +1934,39 @@ public class MainController implements Initializable {
                 addGroupHelper(group, x, y);
             }
         });
+
+        node.addEventHandler(MouseDragEvent.MOUSE_DRAGGED, (MouseEvent me) -> {
+            // drag the pane around
+
+            if (buttonFlag == BUTTON_SELECT) {
+
+                // Used to get coordinates for the mouse relative to the draw area
+                Point2D locationInScene = new Point2D(me.getSceneX(), me.getSceneY());
+                Point2D locationInParent = node.sceneToLocal(locationInScene);
+
+                double X = locationInParent.getX();
+                double Y = locationInParent.getY();
+
+                // the current position of the node
+                double currY = node.getLayoutY();
+
+                double offsetW = ((InteractionPane) node).getWidth();
+                double offsetH = ((InteractionPane) node).getHeight();
+
+                double finalX = X - deltaX;
+                double finalY = Y - deltaY;
+
+                //if (X < interactionPane.getWidth() - offsetW && Y < interactionPane.getHeight() - offsetH) {
+                //System.out.println(finalX + " " + finalY);
+
+                node.setTranslateX(finalX);
+                node.setTranslateY(finalY);
+                //}
+
+            }
+
+        });
+
     }
 
     public void addGroupHelper(Group group, double x, double y) {
@@ -1967,10 +2007,14 @@ public class MainController implements Initializable {
                 Microinteraction currMicro = ((MicroBox) node).getMicrointeraction();
                 addGlobalParams(currMicro);
 
+                // switch the tab
+                paramTab.setExpanded(true);
+
                 // display the properties box
                 if (((MicroBox) node).getMicrointeraction().getEndStates() != null) { }
                 me.consume();
-            } else if (buttonFlag == BUTTON_SELECT && me.getButton().equals(MouseButton.SECONDARY)) {
+
+            } /*else if (buttonFlag == BUTTON_SELECT && me.getButton().equals(MouseButton.SECONDARY)) {
                 if (false) ; // replace "true" with "false" if we want actual exporting abilities!
                 else {
 
@@ -1998,6 +2042,7 @@ public class MainController implements Initializable {
                     me.consume();
                 }
             }
+            */
         });
 
     }

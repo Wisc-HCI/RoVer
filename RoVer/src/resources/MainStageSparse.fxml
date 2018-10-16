@@ -30,6 +30,11 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
+                  <MenuItem mnemonicParsing="false" onAction="#clearDesign" text="Clear Design">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#importDesign" text="Import Interaction">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -74,11 +79,11 @@
             </Menu>
          </menus>
       </MenuBar>
-      <ToolBar fx:id="toolbar" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <ToolBar fx:id="toolbar" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="1920.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <items>
-            <ToggleButton fx:id="selectButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectButton" prefHeight="60.0" prefWidth="60.0">
+            <ToggleButton fx:id="selectButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectButton" prefHeight="50.0" prefWidth="50.0">
                <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Icons/selection.png" />
                      </image>
@@ -91,9 +96,9 @@
                   <Tooltip text="Select" />
                </tooltip>
             </ToggleButton>
-            <ToggleButton fx:id="addGroup" mnemonicParsing="false" onAction="#addGroupButton" prefHeight="60.0" prefWidth="60.0">
+            <ToggleButton fx:id="addGroup" mnemonicParsing="false" onAction="#addGroupButton" prefHeight="50.0" prefWidth="50.0">
                <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Icons/addState.png" />
                      </image>
@@ -103,9 +108,9 @@
                   <Tooltip text="Add Group" />
                </tooltip>
             </ToggleButton>
-            <ToggleButton fx:id="addTransition" mnemonicParsing="false" onAction="#addTransitionButton" prefHeight="60.0" prefWidth="60.0">
+            <ToggleButton fx:id="addTransition" mnemonicParsing="false" onAction="#addTransitionButton" prefHeight="50.0" prefWidth="50.0">
                <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Icons/addTransition.png" />
                      </image>
@@ -118,9 +123,9 @@
             <AnchorPane fx:id="bugStatPane" prefHeight="60.0" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button mnemonicParsing="false" onAction="#beginSimulate" prefHeight="60.0" prefWidth="60.0">
+            <Button mnemonicParsing="false" onAction="#beginSimulate" prefHeight="50.0" prefWidth="50.0">
                <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Icons/start.png" />
                      </image>
@@ -130,9 +135,9 @@
                   <Tooltip text="Simulate" />
                </tooltip>
             </Button>
-            <Button mnemonicParsing="false" onAction="#endSimulate" prefHeight="60.0" prefWidth="60.0">
+            <Button mnemonicParsing="false" onAction="#endSimulate" prefHeight="50.0" prefWidth="50.0">
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Icons/stop.png" />
                      </image>
@@ -178,7 +183,7 @@
                                           <AnchorPane fx:id="about" />
                                        </content>
                                     </TitledPane>
-                                  <TitledPane animated="false" text="Properties">
+                                  <TitledPane fx:id="paramTab" animated="false" text="Properties">
                                     <content>
                                       <AnchorPane fx:id="parameterizer" />
                                     </content>

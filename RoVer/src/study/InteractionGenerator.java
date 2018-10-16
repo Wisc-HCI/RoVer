@@ -90,7 +90,7 @@ public class InteractionGenerator implements Runnable {
 		HashMap<Integer, java.lang.Boolean> starterInteractionProps = getAllOriginalPropertyViolations(starter, toSatisfy);
 		
 		Exporter exp = new Exporter(starter, numGenerated+"");
-		String name = exp.export("automated_files" + File.separator);
+		String name = exp.export();
 		
 		/*
 		 * 8*********************8

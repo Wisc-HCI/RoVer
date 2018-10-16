@@ -21,29 +21,12 @@ public class Exporter {
 		this.pid = pid;
 		group2id = new HashMap<Group,Integer>();
 	}
-	
+
 	public String export() {
-		return export(null);
-	}
-	
-	public String export(String folder) {
 		populateGroup2ID();
-		String name = beginEncoding(folder);
-		//if (ia.getTutorial() || !ia.getCurrDesign().equals("Instruction-Action")) {
-			encodeGroups();
-			encodeTransitions();
-		//}
-		//else {
-		//	encodeGreeter();
-		//	encodeFarewell();
-		//	encodeIAGroups(0, "Instruction 1");
-		//	encodeIAGroups(1, "Instruction 2");
-		//	encodeIAGroups(2, "Instruction 3");
-		//	encodeIATransitions(0);
-		//	encodeIATransitions(1);
-		//	encodeIATransitions(2);
-		//	encodeIAExtraTransitions();
-		//}
+		String name = beginEncoding();
+		encodeGroups();
+		encodeTransitions();
 		endEncoding();
 		return name;
 	}
@@ -56,17 +39,9 @@ public class Exporter {
 		}
 	}
 	
-	public String beginEncoding(String folder) {
+	public String beginEncoding() {
 		String name = "";
-		if (folder != null)
-			name += folder;
-		
-		name += pid;
-		
-		if (ia.getTutorial())
-			name += "_tutorial";
-		else
-			name += "_" + ia.getCurrDesign();
+		name += "interaction";
 		try {
 			writer = new PrintWriter(name + ".xml", "UTF-8");
 		} catch (FileNotFoundException e) {
@@ -94,24 +69,6 @@ public class Exporter {
 		writer.close();
 		//InfoPanel in = new InfoPanel("Design successfully saved!");
 		//in.display();
-	}
-	
-	public void encodeGreeter() {
-		writer.println("\n\t<group id=\"" + (3*ia.getGroups().size()) + "\" init=\"true\" x=\"0\" y=\"0\">");
-		writer.println("\t\t<name>start</name>");
-		writer.println("\t\t<micro>");
-		writer.println("\t\t\t<name>Greeter</name>");
-		writer.println("\t\t</micro>");
-		writer.println("\t</group>");
-	}
-	
-	public void encodeFarewell() {
-		writer.println("\n\t<group id=\"" + (3*(ia.getGroups().size())+1) + "\" init=\"false\" x=\"0\" y=\"0\">");
-		writer.println("\t\t<name>end</name>");
-		writer.println("\t\t<micro>");
-		writer.println("\t\t\t<name>Farewell</name>");
-		writer.println("\t\t</micro>");
-		writer.println("\t</group>");
 	}
 	
 	public void encodeGroups() {
