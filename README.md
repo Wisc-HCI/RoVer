@@ -10,10 +10,6 @@ Currently, RoVer only works with the Prism Model Checker, which you must downloa
 
 RoVer works on OSX and Linux.
 
-```
-Give examples
-```
-
 ### Installing
 
 Installation instructions will be provided soon. For the time being, email dporfirio@wisc.edu to learn how to install RoVer.
