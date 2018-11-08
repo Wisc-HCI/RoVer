@@ -6,9 +6,9 @@
     <var name="startedAsking" type="bool" init="false"></var>
     <var name="understood" type="bool" init="true"></var>
     <var name="ended" type="bool" init="false"></var>
-    <var name="doneAsk" type="handshake"></var>
+    <var name="h_donespeak" type="handshake"></var>
     <var name="doneSpeak" type="handshake"></var>
-    <var name="ask" type="handshake"></var>
+    <var name="h_speak" type="handshake"></var>
     <var name="answer" type="handshake"></var>
     <var name="giveup" type="handshake"></var>
     <var name="speak" type="handshake"></var>
@@ -181,7 +181,7 @@
       <source ref="2"/>
       <target ref="1"/>
       <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
-      <sync kind="sync" var="ask" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <update var="startedAsking" val="true" x="300" y="300"></update>
       <guard var="asked" rel="=" val="false" x="300" y="300"></guard>
     </transition>
@@ -189,14 +189,14 @@
       <source ref="3"/>
       <target ref="1"/>
       <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
-      <sync kind="sync" var="ask" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <update var="startedAsking" val="true" x="300" y="300"></update>
       <guard var="asked" rel="=" val="false" x="300" y="300"></guard>
     </transition>
     <transition>
       <source ref="0"/>
       <target ref="1"/>
-      <sync kind="sync" var="ask" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <update var="startedAsking" val="true" x="300" y="300"></update>
       <guard var="asked" rel="=" val="false" x="300" y="300"></guard>
       <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
@@ -204,14 +204,14 @@
     <transition>
       <source ref="1"/>
       <target ref="0"/>
-      <sync kind="sync" var="doneAsk" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
       <update var="understood" val="true" x="300" y="300"></update>
       <update var="asked" val="true" x="300" y="300"></update>
     </transition>
     <transition>
       <source ref="1"/>
       <target ref="0"/>
-      <sync kind="sync" var="doneAsk" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
       <update var="asked" val="true" x="300" y="300"></update>
       <update var="understood" val="false" x="300" y="300"></update>
     </transition>

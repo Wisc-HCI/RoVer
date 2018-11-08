@@ -2,8 +2,8 @@
   <name>Wait</name>
   <description>The robot waits for the human for a pre-specified amount of time.</description>
   <globals>
-  	<var name="speak" type="handshake"></var>
-  	<var name="donespeak" type="handshake"></var>
+  	<var name="h_speak" type="handshake"></var>
+  	<var name="h_donespeak" type="handshake"></var>
 	<var name="ignoredFoundFace" type="handshake"></var>
 	<var name="ignoredLostAttention" type="handshake"></var>
 	<var name="busyReadyFoundFace" type="handshake"></var>
@@ -37,7 +37,7 @@
       <source ref="0"/>
       <target ref="1"/>
       <update var="ended" val="true" x="300" y="300"></update>
-      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
       <guard var="allow_speech" rel="=" val="true" x="300" y="300"></guard>
     </transition>
     <transition>
@@ -75,7 +75,7 @@
     <transition>
       <source ref="0"/>
       <target ref="3"/>
-      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <guard var="spoke" rel="=" val="false" x="300" y="300"></guard>
       <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
       <guard var="allow_speech" rel="=" val="true" x="300" y="300"></guard>
@@ -83,21 +83,21 @@
     <transition>
       <source ref="1"/>
       <target ref="3"/>
-      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
       <guard var="allow_speech" rel="=" val="true" x="300" y="300"></guard>
     </transition>
     <transition>
       <source ref="2"/>
       <target ref="3"/>
-      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
       <guard var="allow_speech" rel="=" val="true" x="300" y="300"></guard>
     </transition>
     <transition>
       <source ref="3"/>
       <target ref="0"/>
-      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
     </transition>
 
     <!--gaze tracking transitions-->
@@ -143,13 +143,13 @@
     <transition>
       <source ref="0"/>
       <target ref="1"/>
-      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <update var="hSpeakLock" val="true" x="300" y="300"></update>
     </transition>
     <transition>
       <source ref="1"/>
       <target ref="0"/>
-      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
       <update var="spoke" val="true" x="300" y="300"></update>
       <update var="hSpeakLock" val="false" x="300" y="300"></update>
     </transition>
@@ -208,17 +208,17 @@
     <transition>
       <source ref="1"/>
       <target ref="0"/>
-      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
     </transition>
     <transition>
       <source ref="2"/>
       <target ref="0"/>
-      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
     </transition>
     <transition>
       <source ref="0"/>
       <target ref="0"/>
-      <sync kind="sync" var="donespeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
     </transition>
     <transition>
       <source ref="1"/>

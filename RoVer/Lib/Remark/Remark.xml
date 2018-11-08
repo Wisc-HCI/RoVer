@@ -4,8 +4,8 @@
   <globals>
     <var name="speak" type="handshake"></var>
     <var name="stopSpeaking" type="handshake"></var>
-    <var name="hspeak" type="handshake"></var>
-    <var name="hstopSpeaking" type="handshake"></var>
+    <var name="h_speak" type="handshake"></var>
+    <var name="h_donespeak" type="handshake"></var>
     <var name="hlock" type="bool" init="false"></var>
     <var name="doneSpeaking" type="bool" init="false"></var>
     <var name="ended" type="bool" init="false"></var>
@@ -28,6 +28,7 @@
       <type>INTERACTING</type>
       <gaze>GAZE_INTIMACY</gaze>
       <gesture>GESTURE_NONE</gesture>
+      <speech>content</speech>
     </state>
     <state id="2" x="300" y="300">
       <name x="300" y="300">End</name>
@@ -100,7 +101,7 @@
       <source ref="0"/>
       <target ref="4"/>
       <guard var="Allow_human_to_respond" rel="=" val="true" x="300" y="300"></guard>
-      <sync kind="sync" var="hspeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <guard var="doneSpeaking" rel="=" val="true" x="300" y="300"></guard>
       <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
       <update var="hlock" val="true" x="300" y="300"></update>
@@ -109,7 +110,7 @@
       <source ref="1"/>
       <target ref="4"/>
       <guard var="Allow_human_to_respond" rel="=" val="true" x="300" y="300"></guard>
-      <sync kind="sync" var="hspeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <guard var="doneSpeaking" rel="=" val="true" x="300" y="300"></guard>
       <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
       <update var="hlock" val="true" x="300" y="300"></update>
@@ -118,7 +119,7 @@
       <source ref="2"/>
       <target ref="4"/>
       <guard var="Allow_human_to_respond" rel="=" val="true" x="300" y="300"></guard>
-      <sync kind="sync" var="hspeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <guard var="doneSpeaking" rel="=" val="true" x="300" y="300"></guard>
       <guard var="ended" rel="=" val="false" x="300" y="300"></guard>
       <update var="hlock" val="true" x="300" y="300"></update>
@@ -126,7 +127,7 @@
     <transition>
       <source ref="4"/>
       <target ref="3"/>
-      <sync kind="sync" var="hstopSpeaking" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
       <update var="hlock" val="false" x="300" y="300"></update>
     </transition>
   </module>
@@ -147,12 +148,12 @@
     <transition>
       <source ref="0"/>
       <target ref="1"/>
-      <sync kind="sync" var="hspeak" x="-119" y="-76"></sync>
+      <sync kind="sync" var="h_speak" x="-119" y="-76"></sync>
     </transition>
     <transition>
       <source ref="1"/>
       <target ref="0"/>
-      <sync kind="sync" var="hstopSpeaking" x="-136" y="85"></sync>
+      <sync kind="sync" var="h_donespeak" x="-136" y="85"></sync>
     </transition>
   </module>
   <module>

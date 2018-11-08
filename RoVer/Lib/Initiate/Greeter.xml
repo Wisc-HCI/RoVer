@@ -6,8 +6,8 @@
 		<var name="robot_greeted" type="bool" init="false"></var>
 		<var name="begin_greet" type="handshake"></var>
 		<var name="end_greet" type="handshake"></var>
-		<var name="human_greets" type="handshake"></var>
-		<var name="human_end_greet" type="handshake"></var>
+		<var name="h_speak" type="handshake"></var>
+		<var name="h_donespeak" type="handshake"></var>
 		<var name="human_ignores" type="handshake"></var>
 		<var name="Greet_with_speech" type="bool" init="true" parameter="true"  required="true" description="Set whether the robot greets the human with speech."></var>
 		<var name="Greet_with_handshake" type="bool" init="false" parameter="true"  required="true" description="Set whether the robot extends its arm for a handshake."></var>
@@ -34,7 +34,10 @@
 			<name x="-78" y="-68">Greeting</name>
 			<type>INTERACTING</type>
 			<gaze>GAZE_INTIMACY</gaze>
-      		<gesture>GESTURE_NONE</gesture>
+      <gesture>GESTURE_NONE</gesture>
+			<speech val="Hello!"/>
+			<speech val="Hi, my name is Nao!"/>
+			<speech val="How's it going?"/>
 		</state>
 		<state id="3" x="200" y="300">
 			<name x="-290" y="-68">Start</name>
@@ -46,7 +49,7 @@
 		<transition>
 			<source ref="0"/>
 			<target ref="1"/>
-			<sync kind="sync" var="human_end_greet" x="110" y="-102"></sync>
+			<sync kind="sync" var="h_donespeak" x="110" y="-102"></sync>
 			<update var="robot_greeted" val="false" x="-50" y="-51"></update>
 			<nail x="575" y="200"/>
 		</transition>
@@ -100,7 +103,7 @@
 			<source ref="4"/>
 			<target ref="5"/>
 			<guard var="Wait_for_response" rel="=" val="true" x="300" y="300"></guard>
-			<sync kind="sync" var="human_greets" x="-34" y="-34"></sync>
+			<sync kind="sync" var="h_speak" x="-34" y="-34"></sync>
 			<guard var="robot_greeted" rel="=" val="true" x="300" y="300"></guard>
 		</transition>
 		<transition>
@@ -119,7 +122,7 @@
 			<source ref="6"/>
 			<target ref="5"/>
 			<guard var="Wait_for_response" rel="=" val="true" x="300" y="300"></guard>
-			<sync kind="sync" var="human_greets" x="-187" y="-85"></sync>
+			<sync kind="sync" var="h_speak" x="-187" y="-85"></sync>
 			<guard var="robot_greeted" rel="=" val="true" x="300" y="300"></guard>
 		</transition>
 	</module>
@@ -140,13 +143,13 @@
 		<transition>
 			<source ref="7"/>
 			<target ref="8"/>
-			<sync kind="sync" var="human_end_greet" x="-119" y="-76"></sync>
+			<sync kind="sync" var="h_donespeak" x="-119" y="-76"></sync>
 			<nail x="575" y="200"/>
 		</transition>
 		<transition>
 			<source ref="8"/>
 			<target ref="7"/>
-			<sync kind="sync" var="human_greets" x="-136" y="85"></sync>
+			<sync kind="sync" var="h_speak" x="-136" y="85"></sync>
 			<nail x="575" y="400"/>
 		</transition>
 	</module>
@@ -202,7 +205,7 @@
 		</state>
 		<state id="1" x="500" y="300">
 			<name x="-222" y="-26">Extended</name>
-			<type>EXTENDED</type>
+			<type>HANDSHAKE</type>
 		</state>
 		<init ref="0"></init>
 		<transition>

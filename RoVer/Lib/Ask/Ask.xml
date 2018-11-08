@@ -8,8 +8,8 @@
     <var name="ask" type="handshake"></var>
     <var name="doneAsk" type="handshake"></var>
     <var name="timeout" type="handshake"></var>
-    <var name="speak" type="handshake"></var>
-    <var name="doneSpeak" type="handshake"></var>
+    <var name="h_speak" type="handshake"></var>
+    <var name="h_donespeak" type="handshake"></var>
     <var name="answers robot can recognize" type="array" init="" parameter="true"  required="true" prismIgnore="true" description="List of answers that the robot can recognize."></var>
     <var name="question" type="str" init="" parameter="true"  required="true" prismIgnore="true" description="The specific question that the robot will ask."></var>
   </globals>
@@ -107,19 +107,19 @@
       <source ref="0"/>
       <target ref="1"/>
       <guard var="asked" rel="=" val="true" x="300" y="300"></guard>
-      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
       <update var="asked" val="false" x="300" y="300"></update>
     </transition>
     <transition>
       <source ref="1"/>
       <target ref="0"/>
-      <sync kind="sync" var="doneSpeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
       <update var="answered" val="true" x="300" y="300"></update>
     </transition>
     <transition>
       <source ref="1"/>
       <target ref="0"/>
-      <sync kind="sync" var="doneSpeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
       <update var="unknownAnswered" val="true" x="300" y="300"></update>
     </transition>
     <transition>
@@ -171,12 +171,12 @@
     <transition>
       <source ref="1"/>
       <target ref="0"/>
-      <sync kind="sync" var="speak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
     </transition>
     <transition>
       <source ref="0"/>
       <target ref="1"/>
-      <sync kind="sync" var="doneSpeak" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
     </transition>
   </module>
 </nta>

@@ -33,6 +33,7 @@
       <type>INTERACTING</type>
       <gaze>GAZE_REFERENCE</gaze>
       <gesture>GESTURE_DIECTIC</gesture>
+      <speech>Instruction</speech>
     </state>
     <state id="3" x="300" y="300">
       <name x="300" y="300">Summarizing</name>

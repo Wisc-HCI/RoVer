@@ -4,11 +4,11 @@
 	<description>The robot bids farewell to the human.</description>
 	<globals>
 		<var name="robot_goodbye" type="bool" init="false"></var>
-		<var name="human_donespeak" type="handshake"></var>
+		<var name="h_donespeak" type="handshake"></var>
 		<var name="speak" type="handshake"></var>
 		<var name="doneSpeak" type="handshake"></var>
 		<var name="human_input" type="handshake"></var>
-		<var name="human_speak" type="handshake"></var>
+		<var name="h_speak" type="handshake"></var>
 	</globals>
 	<module>
 		<name>Robot</name>
@@ -31,7 +31,10 @@
 			<name x="83" y="0">BiddingFarewell</name>
 			<type>INTERACTING</type>
 			<gaze>GAZE_INTIMACY</gaze>
-      		<gesture>GESTURE_NONE</gesture>
+      <gesture>GESTURE_NONE</gesture>
+			<speech val="Goodbye!"/>
+			<speech val="See you later!"/>
+			<speech val="Nice talking to you!"/>
 		</state>
 		<state id="3" x="200" y="300">
 			<name x="-120" y="0">Start</name>
@@ -49,7 +52,7 @@
 		<transition>
 			<source ref="1"/>
 			<target ref="0"/>
-			<sync kind="sync" var="human_donespeak" x="111" y="17"></sync>
+			<sync kind="sync" var="h_donespeak" x="111" y="17"></sync>
 			<update var="robot_goodbye" val="false" x="-50" y="-51"></update>
 		</transition>
 		<transition>
@@ -87,7 +90,7 @@
 			<source ref="4"/>
 			<target ref="5"/>
 			<guard var="robot_goodbye" rel="=" val="true" x="300" y="300"></guard>
-			<sync kind="sync" var="human_speak" x="-34" y="-34"></sync>
+			<sync kind="sync" var="h_speak" x="-34" y="-34"></sync>
 		</transition>
 		<transition>
 			<source ref="4"/>
@@ -103,7 +106,7 @@
 			<source ref="6"/>
 			<target ref="5"/>
 			<guard var="robot_goodbye" rel="=" val="true" x="300" y="300"></guard>
-			<sync kind="sync" var="human_speak" x="-187" y="-85"></sync>
+			<sync kind="sync" var="h_speak" x="-187" y="-85"></sync>
 		</transition>
 	</module>
 	<module>
@@ -123,13 +126,13 @@
 		<transition>
 			<source ref="7"/>
 			<target ref="8"/>
-			<sync kind="sync" var="human_donespeak" x="-119" y="-76"></sync>
+			<sync kind="sync" var="h_donespeak" x="-119" y="-76"></sync>
 			<nail x="575" y="200"/>
 		</transition>
 		<transition>
 			<source ref="8"/>
 			<target ref="7"/>
-			<sync kind="sync" var="human_speak" x="-136" y="85"></sync>
+			<sync kind="sync" var="h_speak" x="-136" y="85"></sync>
 			<nail x="575" y="400"/>
 		</transition>
 	</module>
