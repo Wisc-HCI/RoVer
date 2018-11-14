@@ -19,7 +19,7 @@ endinit
 module Robot
 
 	st_m: [0..3];
-	[human_end_greet] st_m=0 -> (st_m'=1) & (robot_greeted'=false);
+	[h_donespeak] st_m=0 -> (st_m'=1) & (robot_greeted'=false);
 	[human_ignores] st_m=0 -> (st_m'=1) & (robot_greeted'=false);
 	[end_greet] st_m=2 & Wait_for_response=true -> (st_m'=0) & (robot_greeted'=true);
 	[end_greet] st_m=2 & Wait_for_response=false -> (st_m'=1) & (robot_greeted'=true);
@@ -30,18 +30,18 @@ endmodule
 module Human
 
 	st_n: [0..2];
-	[human_greets] st_n=0 & Wait_for_response=true & robot_greeted=true -> (st_n'=1);
+	[h_speak] st_n=0 & Wait_for_response=true & robot_greeted=true -> (st_n'=1);
 	[human_ignores] st_n=0 & Wait_for_response=true -> (st_n'=0);
 	[human_ignores] st_n=2 & Wait_for_response=true -> (st_n'=0);
-	[human_greets] st_n=2 & Wait_for_response=true & robot_greeted=true -> (st_n'=1);
+	[h_speak] st_n=2 & Wait_for_response=true & robot_greeted=true -> (st_n'=1);
 
 endmodule
 
 module H_Speech
 
 	st_o: [0..1];
-	[human_end_greet] st_o=0 -> (st_o'=1);
-	[human_greets] st_o=1 -> (st_o'=0);
+	[h_donespeak] st_o=0 -> (st_o'=1);
+	[h_speak] st_o=1 -> (st_o'=0);
 
 endmodule
 
