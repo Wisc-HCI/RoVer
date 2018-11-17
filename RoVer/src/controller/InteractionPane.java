@@ -191,8 +191,8 @@ class NodeGestures {
  */
 class SceneGestures {
 
-	private static final double MAX_SCALE = 10.0d;
-	private static final double MIN_SCALE = .1d;
+	private static final double MAX_SCALE = 2.0d;
+	private static final double MIN_SCALE = 0.5d;
 
 	private DragContext sceneDragContext = new DragContext();
 
@@ -254,7 +254,7 @@ class SceneGestures {
 		@Override
 		public void handle(ScrollEvent event) {
 
-			double delta = 1.2;
+			double delta = 1.05;
 
 			double scale = canvas.getScale(); // currently we only use Y, same value is used for X
 			double oldScale = scale;
