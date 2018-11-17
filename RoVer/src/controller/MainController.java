@@ -1178,6 +1178,7 @@ public class MainController implements Initializable {
                 }
 
                 // change size of interactionPane to make scroll bar work
+
                 if (finalX < 0) {
                     finalX = 0;
                 }
@@ -1557,6 +1558,10 @@ public class MainController implements Initializable {
 
     public void addIndicatorEventHandler(Node node, GroupTransition currMt, Pane pane) {
         node.addEventHandler(MouseDragEvent.MOUSE_DRAGGED, (MouseEvent me) -> {
+
+            if( !me.isPrimaryButtonDown())
+                return;
+
             Point2D locationInScene = new Point2D(me.getSceneX(), me.getSceneY());
             Point2D locationInParent = pane.sceneToLocal(locationInScene);
 
@@ -1614,7 +1619,7 @@ public class MainController implements Initializable {
                 currMt.removeBreakpoint();
             }
 
-
+            me.consume();
         });
 
         addMacroTransitionDragDropHandlers(node, currMt);

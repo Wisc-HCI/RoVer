@@ -162,6 +162,7 @@ class NodeGestures {
 			nodeDragContext.translateAnchorX = node.getTranslateX();
 			nodeDragContext.translateAnchorY = node.getTranslateY();
 
+			event.consume();
 		}
 
 	};
