@@ -1940,6 +1940,7 @@ public class MainController implements Initializable {
             }
         });
 
+        /*
         node.addEventHandler(MouseDragEvent.MOUSE_DRAGGED, (MouseEvent me) -> {
             // drag the pane around
 
@@ -1971,6 +1972,7 @@ public class MainController implements Initializable {
             }
 
         });
+        */
 
     }
 
