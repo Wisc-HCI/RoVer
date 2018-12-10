@@ -8,10 +8,10 @@ global Wait_for_response: bool;
 init
 	robot_greeted=false &
 	Greet_with_speech=true &
-	Greet_with_handshake=false &
+	Greet_with_handshake=true &
 	Wait_for_response=true &
 	st_m=3 &
-	(st_n=2 | st_n=0) &
+	
 	st_o=1 &
 	st_p=1 &
 	st_q=0

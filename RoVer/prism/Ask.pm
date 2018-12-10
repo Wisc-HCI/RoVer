@@ -28,9 +28,9 @@ endmodule
 module Human
 
 	st_n: [0..2];
-	[speak] st_n=0 & asked=true -> (st_n'=1) & (asked'=false);
-	[doneSpeak] st_n=1 -> (st_n'=0) & (answered'=true);
-	[doneSpeak] st_n=1 -> (st_n'=0) & (unknownAnswered'=true);
+	[h_speak] st_n=0 & asked=true -> (st_n'=1) & (asked'=false);
+	[h_donespeak] st_n=1 -> (st_n'=0) & (answered'=true);
+	[h_donespeak] st_n=1 -> (st_n'=0) & (unknownAnswered'=true);
 	[timeout] st_n=0 -> (st_n'=2);
 
 endmodule
@@ -46,8 +46,8 @@ endmodule
 module H_Speech
 
 	st_p: [0..1];
-	[speak] st_p=1 -> (st_p'=0);
-	[doneSpeak] st_p=0 -> (st_p'=1);
+	[h_speak] st_p=1 -> (st_p'=0);
+	[h_donespeak] st_p=0 -> (st_p'=1);
 
 endmodule
 

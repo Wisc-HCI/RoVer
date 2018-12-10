@@ -271,12 +271,12 @@
       <source ref="1"/>
       <target ref="0"/>
       <guard var="ready_for_question" rel="=" val="true" x="300" y="300"></guard>
-      <sync kind="sync" var="ask" x="300" y="300"></sync>
+      <sync kind="sync" var="h_speak" x="300" y="300"></sync>
     </transition>
     <transition>
       <source ref="0"/>
       <target ref="1"/>
-      <sync kind="sync" var="doneAsk" x="300" y="300"></sync>
+      <sync kind="sync" var="h_donespeak" x="300" y="300"></sync>
     </transition>
   </module>
 </nta>

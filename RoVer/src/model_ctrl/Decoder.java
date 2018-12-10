@@ -215,6 +215,8 @@ public class Decoder {
 						Variable syncvar = null;
 						
 						syncvar = mod.findVariable(varname);
+						System.out.println(sourceID);
+						System.out.println(targetID);
 						
 						// if this is a broadcast sync, is it a listener or enforcer?
 						String role = "none";
