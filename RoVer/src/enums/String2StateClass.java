@@ -75,9 +75,12 @@ public class String2StateClass {
 		case "RETRACTED":
 			sc = StateClass.RETRACTED;
 			 break;
-		case "EXTENDED":
-			sc = StateClass.EXTENDED;
+		case "EXTENDED_HANDOFF":
+			sc = StateClass.EXTENDED_HANDOFF;
 			break;
+        case "EXTENDED_HANDSHAKE":
+            sc = StateClass.EXTENDED_HANDSHAKE;
+            break;
 		case "GESTURE_DIECTIC":
 			sc = StateClass.GESTURE_DIECTIC;
 			break;

@@ -205,7 +205,7 @@
 		</state>
 		<state id="1" x="500" y="300">
 			<name x="-222" y="-26">Extended</name>
-			<type>EXTENDED</type>
+			<type>EXTENDED_HANDSHAKE</type>
 		</state>
 		<init ref="0"></init>
 		<transition>

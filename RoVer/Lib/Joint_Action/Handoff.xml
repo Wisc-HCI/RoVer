@@ -106,7 +106,7 @@
     </locals>
     <state id="1" x="650" y="300">
       <name x="15" y="-26">Arm_Extended</name>
-      <type>EXTENDED</type>
+      <type>EXTENDED_HANDOFF</type>
     </state>
     <state id="0" x="500" y="300">
       <name x="-222" y="-26">Arm_Retracted</name>

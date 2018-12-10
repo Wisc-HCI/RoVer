@@ -44,7 +44,8 @@ public enum StateClass {
 	
 	// arm
 	RETRACTED ("None"),
-	EXTENDED ("Arm"),
+	EXTENDED_HANDSHAKE ("Arm"),
+	EXTENDED_HANDOFF ("Arm"),
 	GESTURE_DIECTIC ("Arm"),
 	GESTURE_ICONIC_METAPHORIC ("Arm"),
 	GESTURE_BEAT ("Arm"),
