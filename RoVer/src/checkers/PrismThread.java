@@ -177,6 +177,7 @@ public class PrismThread implements Runnable {
 		Platform.runLater(
 			() -> {
 				mc.notifyFinishedInitPrism();
+				mc.startDesign();
 			}
 		);
 	}

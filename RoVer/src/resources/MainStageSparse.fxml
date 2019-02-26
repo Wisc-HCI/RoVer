@@ -9,7 +9,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -24,7 +23,7 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <MenuBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
@@ -45,11 +44,6 @@
                         <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#interactionToJPG" text="Export Image">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Exit">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -60,15 +54,6 @@
             <Menu mnemonicParsing="false" text="Feedback">
                <items>
                   <CheckMenuItem fx:id="feedbackSwitch" mnemonicParsing="false" onAction="#switchFeedback" text="Feedback on" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Experiment">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#startDesign" text="Start Design" />
-                  <MenuItem mnemonicParsing="false" onAction="#stopDesign" text="Stop Design" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#lock" text="Lock" />
-                  <MenuItem mnemonicParsing="false" onAction="#unlock" text="Unlock" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">

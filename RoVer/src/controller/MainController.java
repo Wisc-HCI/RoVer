@@ -5,13 +5,10 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import javafx.embed.swing.SwingFXUtils;
 
 import javax.imageio.ImageIO;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.nio.file.Files;
@@ -22,7 +19,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 import checkers.Checker;
 import checkers.PrismThread;
@@ -61,7 +57,6 @@ import model.Group;
 import model.GroupTransition;
 import model_ctrl.*;
 import repair.Repairer;
-import study.BugTracker;
 import study.InteractionGenerator;
 import study.GroupMBP;
 
@@ -138,7 +133,6 @@ public class MainController implements Initializable {
     private boolean canStartExp;
     private boolean canStopExp;
     private boolean canClearDesign;
-    private boolean locked;
     // properties file
     private File propsFile;
     private ArrayList<Property> graphProperties;
@@ -282,7 +276,6 @@ public class MainController implements Initializable {
         canStartExp = true;
         canStopExp = false;
         canClearDesign = false;
-        locked = false;
 
         // finally, start the prism model checker
         // comment this out if starting prism immediately is not desired
@@ -402,36 +395,6 @@ public class MainController implements Initializable {
         }
     }
 
-    // the stop button
-    public void stopDesign() {
-        if (canStopExp && !locked) {
-            String name = exportDesign();
-
-            interaction.killBugTracker(name);
-            interaction.makeBugtrackerNull();
-            selectButton.setSelected(false);
-            addGroup.setSelected(false);
-            addTransition.setSelected(false);
-            interaction.makeBugtrackerNull();
-
-            // move the file to the CurrInteraction folder
-            File sourceFile = new File(name + ".xml");
-            Path source = sourceFile.toPath();
-            File targetFile = new File("CurrInteraction" + File.separator + name + ".xml");
-            Path target = targetFile.toPath();
-
-            try {
-                Files.move(source, target, REPLACE_EXISTING);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            canStopExp = false;
-            canClearDesign = true;
-        }
-    }
-
     public String exportDesign() {
         console.updateText("Exporting interaction.");
         Exporter exp = new Exporter(interaction, participantID);
@@ -440,7 +403,6 @@ public class MainController implements Initializable {
 
     public void importDesign() {
         console.updateText(" Importing interaction.");
-        stopDesign();
         clearDesignHelper(false, false);
 
         Importer imp = new Importer(absFilePath, interaction, this);
@@ -587,33 +549,6 @@ public class MainController implements Initializable {
 
         canStartExp = true;
         canClearDesign = false;
-    }
-
-    public void interactionToJPG() {
-        // the content of scrollPane is saved as a JPEG file.
-        WritableImage img = interactionPane.snapshot(new SnapshotParameters(), null);
-        File file = new File("interaction.png");
-
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(img, null), "png", file);
-        } catch (IOException e) {
-            // TODO: handle exception here
-        }
-    }
-
-    public void lock() {
-        unselectAllButtons();
-        locked = true;
-        interaction.getBugTracker().addEvent("locked design");
-    }
-
-    public void unlock() {
-        if (locked && canStopExp) {
-            locked = false;
-            if (feedbackSwitch.isSelected())
-                switchFeedback();
-            interaction.getBugTracker().addEvent("unlocked design");
-        }
     }
 
     public void repairInteraction(int ID, Object obj, boolean preview) {
@@ -831,7 +766,7 @@ public class MainController implements Initializable {
     }
 
     public void selectButton(ActionEvent event) {
-        if (interaction.getBugTracker() == null || locked)
+        if (interaction.getBugTracker() == null)
             selectButton.setSelected(false);
         else if (buttonFlag != BUTTON_SELECT) {
             buttonFlag = BUTTON_SELECT;
@@ -844,7 +779,7 @@ public class MainController implements Initializable {
     }
 
     public void addGroupButton(ActionEvent event) {
-        if (interaction.getBugTracker() == null || locked)
+        if (interaction.getBugTracker() == null)
             addGroup.setSelected(false);
         else if (buttonFlag != BUTTON_ADDGROUP) {
             buttonFlag = BUTTON_ADDGROUP;
@@ -857,7 +792,7 @@ public class MainController implements Initializable {
     }
 
     public void addTransitionButton(ActionEvent event) {
-        if (interaction.getBugTracker() == null || locked)
+        if (interaction.getBugTracker() == null)
             addTransition.setSelected(false);
         else if (buttonFlag != BUTTON_ADDTRANS) {
             buttonFlag = BUTTON_ADDTRANS;
@@ -889,22 +824,18 @@ public class MainController implements Initializable {
 
     // used to switch between feedback and no feedback
     public void switchFeedback() {
-        if (locked) {
-            if (feedbackSwitch.isSelected()) {
-                if (isNonAssisted) {
-                    isNonAssisted = false;
-                    for (Microinteraction micro : interaction.getMicros())
-                        micro.setIsStaticTooltip(false);
-                    verify();
-                }
-            } else {
-                if (!isNonAssisted) {
-                    isNonAssisted = true;
-                    for (Microinteraction micro : interaction.getMicros())
-                        micro.setStaticTooltip(staticTooltips.get(micro.getName()));
-                    verify();
-                }
+        if (feedbackSwitch.isSelected()) {
+            if (isNonAssisted) {
+                isNonAssisted = false;
+                for (Microinteraction micro : interaction.getMicros())
+                    micro.setIsStaticTooltip(false);
+                verify();
             }
+        } else if (!isNonAssisted) {
+            isNonAssisted = true;
+            for (Microinteraction micro : interaction.getMicros())
+                micro.setStaticTooltip(staticTooltips.get(micro.getName()));
+            verify();
         }
     }
 
@@ -1097,7 +1028,7 @@ public class MainController implements Initializable {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
                 if (db.hasString() && interaction.getBugTracker() != null) {
-                    if (db.getString().equals("TransferMicro") && !locked) {
+                    if (db.getString().equals("TransferMicro")) {
                         success = true;
                         File file = db.getFiles().get(0);
                         //import microinteraction method should be called here using the above file
@@ -1706,7 +1637,7 @@ public class MainController implements Initializable {
                 if (db.hasString() && interaction.getBugTracker() != null) {
                     String content = db.getString();
                     interaction.getBugTracker().addCommand("changed mt conditions");
-                    if (content.contains("TransferCondition") && !locked) {
+                    if (content.contains("TransferCondition")) {
                         boolean[] humanBranching = ((GroupTransition) mt).getHumanBranching();
                         boolean[] vals = {humanBranching[0], humanBranching[1], humanBranching[2]};
                         if (content.contains("ready"))
@@ -1770,7 +1701,7 @@ public class MainController implements Initializable {
     }
 
     private void handleMacroTransEvent(MouseEvent me, Node node) {
-        if (buttonFlag == BUTTON_SELECT && !locked && me.getButton().equals(MouseButton.PRIMARY)) {
+        if (buttonFlag == BUTTON_SELECT && me.getButton().equals(MouseButton.PRIMARY)) {
 
             TransitionProperties transitionProperties = new TransitionProperties((GroupTransition) node, interaction.getBugTracker());
 

@@ -36,7 +36,7 @@ public class MicroBox extends StackPane {
 	
 	public void initialize(Color color) {
 		//TODO Replace the two rectangles with a single rectangle with a black border 6px thick
-		rect = new Rectangle(150, 32, Color.BLACK);
+		rect = new Rectangle(150, 32, Color.SILVER);
 		rectInner = new Rectangle(146, 28, color);
 		flashingRect = new Rectangle(146, 28, Color.TRANSPARENT);
 		rect.setArcHeight(16);
