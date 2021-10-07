@@ -57,7 +57,6 @@ import model.Group;
 import model.GroupTransition;
 import model_ctrl.*;
 import repair.Repairer;
-import study.InteractionGenerator;
 import study.GroupMBP;
 
 /*
