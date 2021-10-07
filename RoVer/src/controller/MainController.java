@@ -641,20 +641,6 @@ public class MainController implements Initializable {
         rep.repair(ID, obj, lowX, lowY, highX - lowX, highY - lowY, preview);
     }
 
-    public void removeRepairPreview() {
-        ArrayList<Object> previews = rep.getPreview();
-        for (Object obj : previews) {
-            Node node = (Node) obj;
-            interactionPane.getChildren().remove(node);
-        }
-    }
-
-    public void generateRandomInteraction() {
-
-        InteractionGenerator randInteractGen = new InteractionGenerator(this, interaction.getNetworkPropagator(), importMicrosCT);
-        randInteractGen.start();
-    }
-
     // notification for initializing prism
     public void notifyInitPrism() {
         prismInitController = new PrismInitController();
