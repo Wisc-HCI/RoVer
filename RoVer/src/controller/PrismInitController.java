@@ -16,7 +16,6 @@ public class PrismInitController {
 	Stage window;
 
 	public void display() {
-		System.out.println("sdfas");
 		try{
 			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("resources" + File.separator + "PrismInitDialogue.fxml"));
 			Scene scene = new Scene(root, 450, 159);

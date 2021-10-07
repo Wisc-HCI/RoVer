@@ -172,13 +172,7 @@ public class BugTracker {
             if (type.equals("sequential")) {
                 long currTime = System.nanoTime();
                 int bugId = sequentialBugIDs.get((ArrayList<Microinteraction>) bugToRemove);
-
-                System.out.println(sequentialBugIDs.size());
-                System.out.println(sequentialBugIDs.toString());
                 sequentialBugIDs.remove((ArrayList<Microinteraction>) bugToRemove);
-                System.out.println(sequentialBugIDs.size());
-                System.out.println(sequentialBugIDs.toString());
-
                 writer.println("remove, sequential, " + bugId + ", " + ia.getMicros().size() + ", " + ia.getMacroTransitions().size() + ", " + ia.getGroups().size() + ", " + (currTime - startTime) / 1000000000.0);
             } else if (type.equals("branching")) {
                 long currTime = System.nanoTime();
